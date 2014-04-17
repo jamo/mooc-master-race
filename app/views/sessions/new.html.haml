@@ -1,0 +1,9 @@
+= form_for @user, url: sessions_path, method: :post do |f|
+  %h2 Sign in
+
+  = f.label :username
+  = f.text_field :username, class: 'form-control input-block-level'
+  = f.label :password
+  = f.password_field :password, class: 'form-control input-block-level'
+  = f.submit "Sign in", class: "btn btn-lg btn-primary btn-block"
+

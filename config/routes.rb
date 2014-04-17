@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get 'login', to: 'sessions#new', as: 'login_path'
+  resources :sessions
   resources :applicants
   resources :interviews
 

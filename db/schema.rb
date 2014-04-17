@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417224323) do
+ActiveRecord::Schema.define(version: 20140417232447) do
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -62,5 +62,13 @@ ActiveRecord::Schema.define(version: 20140417224323) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
+
+  create_table "users", force: true do |t|
+    t.string   "username"
+    t.string   "password_digest"
+    t.boolean  "admin",           default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
