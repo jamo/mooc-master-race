@@ -85,13 +85,13 @@ class ApplicantsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_applicant
-      @applicant = Applicant.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_applicant
+    @applicant = Applicant.where(key: params[:id]).first
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def applicant_params
-      params.require(:applicant).permit(:name, :nick, :email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def applicant_params
+    params.require(:applicant).permit(:name, :nick, :email)
+  end
 end
