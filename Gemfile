@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'haml-rails'
 gem "twitter-bootstrap-rails"
 
+gem 'httparty'
 
 gem 'therubyracer',  platforms: :ruby
 
