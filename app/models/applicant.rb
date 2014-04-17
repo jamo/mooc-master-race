@@ -1,6 +1,8 @@
 require 'tmc_connection'
 class Applicant < ActiveRecord::Base
 
+  has_one :interview
+  has_one :interview_day, through: :interview
 
   before_create :set_key
 

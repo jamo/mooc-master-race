@@ -1,0 +1,37 @@
+// Place all the styles related to the interviews controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.day-limiter {
+  list-style: none;
+}
+
+
+.interview-days-list {
+  list-style: none;
+}
+
+tr {
+  &.free {
+    background-color: #A8CD1B;
+  }
+  &.disabled {
+    background-color: #F3FAB6;
+  }
+  &.reserved {
+    background-color: #D9853B;
+  }
+}
+.interview {
+
+  margin-top: 2px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+tbody > tr{
+}
+td.empty {
+  width: 20px;
+}
+

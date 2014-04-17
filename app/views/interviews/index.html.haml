@@ -1,0 +1,20 @@
+.row
+  .col-xs-8
+    %table.table
+      - @interview_days.each do |day|
+        %thead
+          %tr
+            %th
+              %strong Day:
+              = day.date.strftime("%d.%m.%y")
+        %tbody
+          - day.interviews.each do |interview|
+            %tr{class: interview.status}
+              %td.empty
+              %td
+                %strong Starts at:
+                = interview.start_time.strftime("%H:%M")
+              %td
+                =form_for interview, class: "form-inline" do |f|
+                  = f.submit "Ilmoittaudu", class: "btb btn-primary"
+

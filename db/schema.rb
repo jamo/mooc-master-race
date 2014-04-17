@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417204927) do
+ActiveRecord::Schema.define(version: 20140417224323) do
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 20140417204927) do
     t.string   "missing_points",                         default: ""
     t.string   "key"
     t.text     "essay"
+  end
+
+  create_table "interview_days", force: true do |t|
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "interviews", force: true do |t|
+    t.integer  "applicant_id"
+    t.integer  "interview_day_id"
+    t.datetime "start_time"
+    t.integer  "duration_in_minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",              default: 0
   end
 
   create_table "settings", force: true do |t|
