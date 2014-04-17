@@ -18,6 +18,9 @@ gem "twitter-bootstrap-rails"
 
 gem 'httparty'
 
+gem "rails-settings-cached", "0.4.0"
+
+
 gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
