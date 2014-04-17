@@ -2,6 +2,17 @@ require 'tmc_connection'
 class Applicant < ActiveRecord::Base
 
 
+  before_create :set_key
+
+
+  def set_key
+    self.key = SecureRandom.uuid
+  end
+
+  def to_param
+    self.key
+  end
+
   class << self
     def update_all_data_with_tmc
       data = TmcConnection.new.download!

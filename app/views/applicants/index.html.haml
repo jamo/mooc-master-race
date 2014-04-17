@@ -5,20 +5,20 @@
 %table.table.table-striped.table-hover.table-bordered
   %thead
     %tr
-      %th= model_class.human_attribute_name(:name)
-      %th= model_class.human_attribute_name(:nick)
-      %th= model_class.human_attribute_name(:email)
-      %th= model_class.human_attribute_name(:created_at)
-      %th= model_class.human_attribute_name(:missing_points)
+      %th= sortable_model_name(:name)
+      %th= sortable_model_name(:nick)
+      %th= sortable_model_name(:email)
+      %th= sortable_model_name(:created_at)
+      %th= sortable_model_name(:missing_points)
       - 1.upto(12).each do |i|
-        %th= model_class.human_attribute_name("week#{i}".to_sym)
+        %th= sortable_model_name("week#{i}".to_sym)
 
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @applicants.each do |applicant|
       %tr
         %td= applicant.name
-        %td= link_to applicant.nick, applicant_path(applicant)
+        %td= link_to applicant.nick, applicant_path(applicant.key)
         %td= applicant.email
         %td=l applicant.created_at
         %td= applicant.missing_points

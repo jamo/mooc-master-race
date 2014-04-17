@@ -4,7 +4,30 @@ class ApplicantsController < ApplicationController
   # GET /applicants
   # GET /applicants.json
   def index
-    @applicants = Applicant.all
+    order = case params[:sort_by]
+            when 'name'
+              'name'
+            when 'nick'
+              'nick'
+            when 'email'
+              'email'
+            when 'missing_points'
+              'missing_points'
+            when /week\d+/
+              "#{params[:sort_by]}"
+            end
+
+    direction = if params[:direction] == "asc"
+                  "ASC"
+                elsif params[:direction] == "desc"
+                  "DESC"
+                end
+
+    @applicants = if order
+                    Applicant.order("#{order} #{direction}")
+                  else
+                    Applicant.all
+                  end
   end
 
   # GET /applicants/1
