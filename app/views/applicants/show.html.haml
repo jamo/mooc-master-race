@@ -30,6 +30,14 @@
       %tr
         - 1.upto(12).each do |i|
           %td= @applicant.send("week#{i}".to_sym)
+%p
+
+  = form_for @applicant do |f|
+    .form-group
+      = f.label "Kirjoitelma:"
+      .col-sm-10
+        = f.text_area :essay, class: "input-block-level form-control", rows: 10, type: "text"
+    = f.submit "Tallenna kirjoitelma", class: 'btn btn-primary'
 
 .form-actions
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_applicant_path(@applicant), :class => 'btn'

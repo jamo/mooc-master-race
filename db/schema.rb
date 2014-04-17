@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417195734) do
+ActiveRecord::Schema.define(version: 20140417204927) do
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20140417195734) do
     t.decimal  "week12",         precision: 5, scale: 0
     t.string   "missing_points",                         default: ""
     t.string   "key"
+    t.text     "essay"
   end
 
   create_table "settings", force: true do |t|
