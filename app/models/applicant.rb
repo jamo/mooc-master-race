@@ -15,6 +15,12 @@ class Applicant < ActiveRecord::Base
     self.key
   end
 
+  def ready_for_interview?
+    self.week1 >= 85 and self.week2 >= 85 and self.week3 >= 85 and self.week4 >= 85 and
+      self.week5 >= 85 and self.week6 >= 85 and self.week7 >= 85 and self.week8 >= 85 and self.week9 >= 85 and
+      self.week10 >= 85 and self.week11 >= 85 and self.week12 >= 85 and self.missing_points == ""
+  end
+
   def not_yet_registerd
     self.interview.nil?
   end

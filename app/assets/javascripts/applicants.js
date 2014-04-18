@@ -5,22 +5,25 @@
 function applicantsReady() {
   $('#applicants-header th').each(function(){
     var name = $(this).attr('id');
-    var checkbox = $('#' + name + '_checkbox')
-    if (checkbox.prop("checked") ){
-      $(this).addClass("checked");
-      $(this).removeClass("unchecked");
-    } else {
-      $(this).removeClass("checked");
-      $(this).addClass("unchecked");
+    if (undefined != name){
+      var checkbox = $('#' + name + '_checkbox')
+      if (checkbox.prop("checked") ){
+        $(this).addClass("checked");
+        $(this).removeClass("unchecked");
+      } else if (!checkbox.prop("checked") ) {
+        $(this).removeClass("checked");
+        $(this).addClass("unchecked");
+      }
     }
-
-  $(this).on('click', function(){
-    $(this).toggleClass("checked");
-    $(this).toggleClass("unchecked");
-    var name = $(this).attr('id');
-    var checkbox = $('#' + name + '_checkbox')
-    checkbox.prop( "checked", !checkbox.prop("checked") );
-  });
+    $(this).on('click', function(){
+      var name = $(this).attr('id');
+      if (undefined != name){
+        $(this).toggleClass("checked");
+        $(this).toggleClass("unchecked");
+        var checkbox = $('#' + name + '_checkbox')
+      checkbox.prop( "checked", !checkbox.prop("checked") );
+      }
+    });
 
   });
 

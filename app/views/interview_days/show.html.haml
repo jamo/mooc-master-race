@@ -1,0 +1,16 @@
+- @interview_day.interviews.each do |interview|
+  .jumbotron{class: interview.status}
+    - applicant = interview.applicant
+    %p= interview
+    %p= interview.inspect
+    %ul
+      %li= interview.status
+      - unless applicant.nil?
+        %li= link_to applicant.name, applicant_path(applicant.key)
+        %li= link_to applicant.nick, applicant_path(applicant.key)
+        %li= link_to applicant.email, applicant_path(applicant.key)
+    -if applicant
+      %pre= applicant.essay
+      %pre= Settings.questionary_notes
+
+

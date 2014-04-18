@@ -14,7 +14,8 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
 gem 'haml-rails'
-gem "twitter-bootstrap-rails"
+gem 'less-rails'
+gem "twitter-bootstrap-rails", git: "https://github.com/seyhunak/twitter-bootstrap-rails.git",  branch: "bootstrap3"
 
 gem 'httparty'
 

@@ -44,19 +44,26 @@
       (Mikäli haluat perua tai muuttaa haastattelusi aikaa, klikkaa linkkiä ja tee muutos siellä):
       = link_to "Varaamani aika #{@applicant.interview}", interviews_path
 %p
-  = form_for @applicant do |f|
+  = form_for @applicant, html: {class: "form-horizontal"} do |f|
     .form-group
-      = f.label "Kirjoitelma:"
+      = f.label "Kirjoitelma:", class: "col-sm-2 control-label"
       .col-sm-10
         = f.text_area :essay, class: "input-block-level form-control", rows: 10
-    = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelmaa"), class: 'btn btn-primary'
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelmaa"), class: 'btn btn-primary'
+
+
+
 - if admin?
-  %p
-    = form_for @applicant, class: "form-horizontal" do |f|
-      .form-group
-        .col-sm-offset-2.col-sm-10
-          = label_tag :name,nil,  class: 'checkbox' do
+  = form_for @applicant, html: {class: "form-horizontal"} do |f|
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = label_tag do
             = f.check_box :message_sent
             Message sent
-      = f.submit "Update message sent status", class: "btn btn-warning"
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = f.submit "Update message sent status", class: "btn btn-warning"
 

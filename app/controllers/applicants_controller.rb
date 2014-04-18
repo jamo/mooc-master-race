@@ -16,6 +16,10 @@ class ApplicantsController < ApplicationController
 
     interesting_orders = %w(message_sent essay name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
+    if fields.empty?
+      fields << :name
+      params[:name] = 1
+    end
 
     condition = if params[:ready_for_exam]
       'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'

@@ -19,43 +19,33 @@
 
 
   %body
-    .navbar.navbar-fluid-top
-      .navbar-inner
-        .container-fluid
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand(href="#") MoocMasterRace
-          .container.nav-collapse
-            %ul.nav
-              %li= link_to "Applicants", applicants_path
-              %li= link_to "Interviews list", interviews_path
-              - if admin?
-                %li= link_to "Admin panel", admin_index_path
-              - if current_user
-                %li= link_to "Logout", logout_path
-              -else
-                %li= link_to "Login", login_path
-            %ul.nav.navbar-nav.navbar-right.pull-right
-              - if applicant?
-                %li= link_to applicant?.name, applicant_path(applicant?.key)
-              -elsif current_user
-                %li= current_user.username
+    .navbar.navbar-default.navbar-static-top
+      .container
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand(href="#") MoocMasterRace
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            %li= link_to "Applicants", applicants_path
+            %li= link_to "Interviews list", interviews_path
+            - if admin?
+              %li= link_to "Admin panel", admin_index_path
+            - if current_user
+              %li= link_to "Logout", logout_path
+            -else
+              %li= link_to "Login", login_path
+          %ul.nav.navbar-nav.navbar-right.pull-right
+            - if applicant?
+              %li= link_to applicant?.name, applicant_path(applicant?.key)
+            -elsif current_user
+              %li= current_user.username
 
-    .container-fluid
-
-      .row-fluid
-        -#.span3
-          .well.sidebar-nav
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Link 1", "/path1"
-              %li= link_to "Link 2", "/path2"
-              %li= link_to "Link 3", "/path3"
-        .col-xs-12
+    .container
+      .row
+        .col-lg-12
           = bootstrap_flash
           = yield
-
       %footer
-        %p &copy; Company 2014
+        %p &copy; Jarmo Isotalo 2014
