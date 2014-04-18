@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418131930) do
+ActiveRecord::Schema.define(version: 20140418204505) do
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140418131930) do
     t.string   "key"
     t.integer  "interview_id"
     t.string   "essay"
+    t.boolean  "message_sent",                           default: false
   end
 
   add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id"
