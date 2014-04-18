@@ -8,3 +8,11 @@
 .completed {
   color: green;
 }
+
+thead th.checked {
+  color: green;
+}
+
+thead th.unchecked {
+  color: red;
+}

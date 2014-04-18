@@ -37,8 +37,8 @@
     = link_to "Ilmoittaudu näyttökokeeseen tästä", interviews_path, class: "btn btn-primary"
   - else
     %p
-      Varaamani aika (mikäli haluat perua tai muuttaa haastattelusi aikaa, klikkaa linkkiä ja tee muutos siellä):
-      = link_to "Varaamani aika #{applicant?.interview}", interviews_path
+      (Mikäli haluat perua tai muuttaa haastattelusi aikaa, klikkaa linkkiä ja tee muutos siellä):
+      = link_to "Varaamani aika #{@applicant.interview}", interviews_path
 %p
   = form_for @applicant do |f|
     .form-group

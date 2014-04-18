@@ -35,8 +35,11 @@
                 %li= link_to "Logout", logout_path
               -else
                 %li= link_to "Login", login_path
+            %ul.nav.navbar-nav.navbar-right.pull-right
               - if applicant?
                 %li= link_to applicant?.name, applicant_path(applicant?.key)
+              -elsif current_user
+                %li= current_user.username
 
     .container-fluid
 

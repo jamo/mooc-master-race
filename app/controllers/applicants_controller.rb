@@ -6,27 +6,27 @@ class ApplicantsController < ApplicationController
   # GET /applicants.json
   def index
     respond_access_denied unless admin?
-    order = case params[:sort_by]
-            when 'name'
-              'name'
-            when 'nick'
-              'nick'
-            when 'email'
-              'email'
-            when 'missing_points'
-              'missing_points'
-            when /week\d+/
-              "#{params[:sort_by]}"
-            end
-
+    @show_missing_points = params[:show_missing_points]
+    @show_weekly_points = params[:show_points]
     direction = if params[:direction] == "asc"
-                  "ASC"
-                elsif params[:direction] == "desc"
-                  "DESC"
+                  :asc
+                else
+                  :desc
                 end
 
-    @applicants = if order
-                    Applicant.order("#{order} #{direction}")
+    interesting_orders = %w(name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
+    fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
+
+    condition = if params[:ready_for_exam]
+      'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'
+    end
+
+    @applicants = if fields.any?
+                    if condition
+                      Applicant.where(condition).order(fields.map{|f| [f => direction]})
+                    else
+                      Applicant.order(fields.map{|f| [f => direction]})
+                    end
                   else
                     Applicant.all
                   end

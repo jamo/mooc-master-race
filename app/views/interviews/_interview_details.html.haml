@@ -12,6 +12,8 @@
           = f.submit "Perun ilmoittautumiseni", class: "btb btn-danger btn-xs"
       - else
         Varattu
+    - elsif interview.reserved?
+      Varattu
     - elsif interview.disabled?
       Tauko
     - elsif interview.free?
@@ -35,3 +37,5 @@
         = hidden_field_tag  :authenticity_token, form_authenticity_token
 
         = f.submit (interview.free? ? "Disable" : "Enable"), class: "btb btn-primary btn-xs"
+    - else
+      Et voi muuttaa varattua aikaa
