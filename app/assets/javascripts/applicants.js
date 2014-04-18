@@ -3,7 +3,7 @@
 
 
 function applicantsReady() {
-  $('thead th').each(function(){
+  $('#applicants-header th').each(function(){
     var name = $(this).attr('id');
     var checkbox = $('#' + name + '_checkbox')
     if (checkbox.prop("checked") ){
