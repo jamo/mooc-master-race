@@ -35,7 +35,7 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1
   # GET /applicants/1.json
   def show
-    session[:applicant_token] = params[:id]
+    session[:applicant_token] = params[:id] unless current_user
   end
 
   # GET /applicants/1/edit
