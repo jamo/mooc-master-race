@@ -1,20 +1,20 @@
 - model_class = Applicant
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1 Omat tietoni
 
 %p
-  %strong= model_class.human_attribute_name(:name) + ':'
+  %strong= model_class.human_attribute_name(:nimi) + ':'
   = @applicant.name
 %p
-  %strong= model_class.human_attribute_name(:tmc_account) + ':'
+  %strong= model_class.human_attribute_name(:tmc_tunnus) + ':'
   = @applicant.nick
 %p
-  %strong= model_class.human_attribute_name(:email) + ':'
+  %strong= model_class.human_attribute_name(:sähköpostiosoite) + ':'
   = @applicant.email
 
 %p
   - unless @applicant.missing_points.blank?
-    %strong= model_class.human_attribute_name(:missing_points) + ':'
+    %strong= model_class.human_attribute_name(:puuttuvat_pisteet) + ':'
     %br
     = @applicant.missing_points
 
@@ -29,15 +29,12 @@
     %tbody
       %tr
         - 1.upto(12).each do |i|
-          %td= @applicant.send("week#{i}".to_sym)
+          %td= format_week_percents(@applicant.send("week#{i}".to_sym))
 %p
 
   = form_for @applicant do |f|
     .form-group
       = f.label "Kirjoitelma:"
       .col-sm-10
-        = f.text_area :essay, class: "input-block-level form-control", rows: 10, type: "text"
-    = f.submit "Tallenna kirjoitelma", class: 'btn btn-primary'
-
-.form-actions
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_applicant_path(@applicant), :class => 'btn'
+        = f.text_area :essay, class: "input-block-level form-control", rows: 10
+    = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelmaa"), class: 'btn btn-primary'
