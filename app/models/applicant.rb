@@ -15,6 +15,10 @@ class Applicant < ActiveRecord::Base
     self.key
   end
 
+  def not_yet_registerd
+    self.interview.nil?
+  end
+
   class << self
     def update_all_data_with_tmc
       data = TmcConnection.new.download!

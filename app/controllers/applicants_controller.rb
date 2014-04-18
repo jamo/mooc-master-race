@@ -1,9 +1,11 @@
 class ApplicantsController < ApplicationController
   before_action :set_applicant, only: [:show, :edit, :update, :destroy]
+  skip_before_action :auth!, only: [:show]
 
   # GET /applicants
   # GET /applicants.json
   def index
+    respond_access_denied unless admin?
     order = case params[:sort_by]
             when 'name'
               'name'
@@ -33,31 +35,11 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1
   # GET /applicants/1.json
   def show
-  end
-
-  # GET /applicants/new
-  def new
-    @applicant = Applicant.new
+    session[:applicant_token] = params[:id]
   end
 
   # GET /applicants/1/edit
   def edit
-  end
-
-  # POST /applicants
-  # POST /applicants.json
-  def create
-    @applicant = Applicant.new(applicant_params)
-
-    respond_to do |format|
-      if @applicant.save
-        format.html { redirect_to @applicant, notice: 'Applicant was successfully created.' }
-        format.json { render :show, status: :created, location: @applicant }
-      else
-        format.html { render :new }
-        format.json { render json: @applicant.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /applicants/1
@@ -71,16 +53,6 @@ class ApplicantsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @applicant.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /applicants/1
-  # DELETE /applicants/1.json
-  def destroy
-    @applicant.destroy
-    respond_to do |format|
-      format.html { redirect_to applicants_url }
-      format.json { head :no_content }
     end
   end
 

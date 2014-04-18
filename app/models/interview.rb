@@ -4,4 +4,7 @@ class Interview < ActiveRecord::Base
   has_one :applicant
 
 
+  def to_s
+    "#{self.start_time.strftime("%a %d.%M.%Y klo  %H:%M")}"
+  end
 end

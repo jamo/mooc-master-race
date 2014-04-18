@@ -1,6 +1,5 @@
 class InterviewsController < ApplicationController
 
-
   def index
     @interview_days = InterviewDay.all.includes(:interviews, :applicants)
   end
@@ -12,6 +11,14 @@ class InterviewsController < ApplicationController
     if params[:register] && @interview.free? && applicant?
       @interview.applicant = applicant?
       @interview.reserved!
+    end
+
+    if params[:deregister]
+      if @interview.applicant = applicant?
+        @interview.free!
+        @interview.applicant = nil
+        applicant?.interview = nil
+      end
     end
 
     if params[:status_change] && admin?

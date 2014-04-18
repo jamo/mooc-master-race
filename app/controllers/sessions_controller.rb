@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    session[:applicant_id] = nil
+    session[:applicant_token] = nil
     redirect_to login_path
   end
 

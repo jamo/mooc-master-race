@@ -25,14 +25,20 @@
     %thead
       %tr
         - 1.upto(12).each do |i|
-          %th= model_class.human_attribute_name("week#{i}".to_sym)
+          %th= model_class.human_attribute_name("Viikko #{i}".to_sym)
     %tbody
       %tr
         - 1.upto(12).each do |i|
           %td= format_week_percents(@applicant.send("week#{i}".to_sym))
 
 %p
-  = link_to "Ilmoittaudu näyttökokeeseen tästä", interviews_path, class: "btn btn-primary"
+
+  - if applicant? and applicant?.not_yet_registerd
+    = link_to "Ilmoittaudu näyttökokeeseen tästä", interviews_path, class: "btn btn-primary"
+  - else
+    %p
+      Varaamani aika (mikäli haluat perua tai muuttaa haastattelusi aikaa, klikkaa linkkiä ja tee muutos siellä):
+      = link_to "Varaamani aika #{applicant?.interview}", interviews_path
 %p
   = form_for @applicant do |f|
     .form-group

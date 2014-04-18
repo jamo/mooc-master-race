@@ -29,9 +29,14 @@
           %a.brand(href="#") MoocMasterRace
           .container.nav-collapse
             %ul.nav
-              %li= link_to "Link 1", "/path1"
-              %li= link_to "Link 2", "/path2"
-              %li= link_to "Link 3", "/path3"
+              %li= link_to "Applicants", applicants_path
+              %li= link_to "Interviews list", interviews_path
+              - if current_user
+                %li= link_to "Logout", logout_path
+              -else
+                %li= link_to "Login", login_path
+              - if applicant?
+                %li= link_to applicant?.name, applicant_path(applicant?.key)
 
     .container-fluid
 

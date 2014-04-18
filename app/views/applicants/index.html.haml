@@ -26,5 +26,3 @@
           %td= format_week_percents(applicant.send("week#{i}".to_sym))
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_applicant_path(applicant), :class => 'btn btn-mini'
-
-= link_to t('.new', :default => t("helpers.links.new")), new_applicant_path, :class => 'btn btn-primary'

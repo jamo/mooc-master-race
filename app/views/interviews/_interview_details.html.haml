@@ -4,15 +4,24 @@
     %strong Starts at:
     = interview.start_time.strftime("%H:%M")
   %td
-    - if interview.reserved?
-      Varattu
+    - if interview.reserved? and applicant?
+      -if interview.applicant == applicant?
+        Minun varaukseni
+        =form_for interview, class: "form-inline" do |f|
+          = hidden_field_tag :deregister, 1
+          = f.submit "Perun ilmoittautumiseni", class: "btb btn-danger btn-xs"
+      - else
+        Varattu
     - elsif interview.disabled?
       Tauko
     - elsif interview.free?
       -if applicant?
-        =form_for interview, class: "form-inline" do |f|
-          = hidden_field_tag :register, 1
-          = f.submit "Ilmoittaudu", class: "btb btn-primary btn-xs"
+        -if current_user.not_yet_registerd
+          =form_for interview, class: "form-inline" do |f|
+            = hidden_field_tag :register, 1
+            = f.submit "Ilmoittaudu", class: "btb btn-primary btn-xs"
+        - else
+          Vapaa
       -elsif admin?
         - if interview.reserved?
           = link_to "Varattu käyttäjälle #{interview.applicant}", applicant_path(applicant.key)
