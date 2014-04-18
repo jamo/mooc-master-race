@@ -1,0 +1,28 @@
+%tr{class: interview.status}
+  %td.empty
+  %td
+    %strong Starts at:
+    = interview.start_time.strftime("%H:%M")
+  %td
+    - if interview.reserved?
+      Varattu
+    - elsif interview.disabled?
+      Tauko
+    - elsif interview.free?
+      -if applicant?
+        =form_for interview, class: "form-inline" do |f|
+          = hidden_field_tag :register, 1
+          = f.submit "Ilmoittaudu", class: "btb btn-primary btn-xs"
+      -elsif admin?
+        - if interview.reserved?
+          = link_to "Varattu käyttäjälle #{interview.applicant}", applicant_path(applicant.key)
+  %td
+    - if (interview.free? or interview.disabled?) and admin?
+      =form_for interview, remote: true, html: {class: "change-interview-status form-inline"} do |f|
+        - if interview.free?
+          = hidden_field_tag :status_change, "disable"
+        - if interview.disabled?
+          = hidden_field_tag :status_change, "enable"
+        = hidden_field_tag  :authenticity_token, form_authenticity_token
+
+        = f.submit (interview.free? ? "Disable" : "Enable"), class: "btb btn-primary btn-xs"

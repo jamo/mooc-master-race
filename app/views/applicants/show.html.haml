@@ -30,8 +30,10 @@
       %tr
         - 1.upto(12).each do |i|
           %td= format_week_percents(@applicant.send("week#{i}".to_sym))
-%p
 
+%p
+  = link_to "Ilmoittaudu näyttökokeeseen tästä", interviews_path, class: "btn btn-primary"
+%p
   = form_for @applicant do |f|
     .form-group
       = f.label "Kirjoitelma:"

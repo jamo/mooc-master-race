@@ -2,21 +2,35 @@ class InterviewsController < ApplicationController
 
 
   def index
-    @interview_days = InterviewDay.all
+    @interview_days = InterviewDay.all.includes(:interviews, :applicants)
   end
 
 
   def update
-    interview = Interview.find(params[:id])
+    @interview = Interview.find(params[:id])
 
-    unless interview.free?
-      #virhe
-      raise
+    if params[:register] && @interview.free? && applicant?
+      @interview.applicant = applicant?
+      @interview.reserved!
     end
 
-    interview.reserved!
+    if params[:status_change] && admin?
+      if params[:status_change] == "disable"
+        @interview.disabled!
+      elsif params[:status_change] == "enable"
+        @interview.free!
+      end
+    end
 
-    redirect_to interviews_path
+
+    respond_to do |format|
+      format.html do
+        redirect_to interviews_path
+      end
+      format.js do
+        render :partial => 'interviews/interview_details', :locals => { :interview => @interview }
+      end
+    end
   end
-
 end
+

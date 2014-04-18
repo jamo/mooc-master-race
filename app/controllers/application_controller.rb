@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :admin?
+  helper_method :current_user, :admin?, :applicant?
 
   before_filter :auth!
 
@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
   def admin?
     user = User.find(session[:user_id])
     user && user.admin?
+  end
+
+  def applicant?
+    return nil unless session[:applicant_token]
+    Applicant.find(session[:applicant_token])
   end
 
 end
