@@ -11,6 +11,10 @@
 %p
   %strong= model_class.human_attribute_name(:sähköpostiosoite) + ':'
   = @applicant.email
+- if admin?
+  %p
+    %strong= model_class.human_attribute_name(:message_sent) + ':'
+    = @applicant.message_sent ? '✓' : '✘'
 
 %p
   - unless @applicant.missing_points.blank?
@@ -46,3 +50,13 @@
       .col-sm-10
         = f.text_area :essay, class: "input-block-level form-control", rows: 10
     = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelmaa"), class: 'btn btn-primary'
+- if admin?
+  %p
+    = form_for @applicant, class: "form-horizontal" do |f|
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = label_tag :name,nil,  class: 'checkbox' do
+            = f.check_box :message_sent
+            Message sent
+      = f.submit "Update message sent status", class: "btn btn-warning"
+

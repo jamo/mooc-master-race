@@ -14,7 +14,7 @@ class ApplicantsController < ApplicationController
                   :desc
                 end
 
-    interesting_orders = %w(name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
+    interesting_orders = %w(message_sent essay name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
 
     condition = if params[:ready_for_exam]
@@ -64,6 +64,10 @@ class ApplicantsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def applicant_params
-    params.require(:applicant).permit(:essay)
+    if admin?
+      params.require(:applicant).permit(:name, :email, :essay, :message_sent)
+    else
+      params.require(:applicant).permit(:essay)
+    end
   end
 end
