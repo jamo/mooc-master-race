@@ -1,3 +1,25 @@
 // Place all the styles related to the interview_days controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.jumbotron{
+
+  &.free {
+    background-color: #D9853B;
+  }
+  &.disabled {
+    padding-top: 10px!important;
+    padding-bottom: 10px!important;
+    background-color: #F3FAB6;
+    ul {
+      display: none !important;
+      visibility: hidden !important;
+    }
+    h2 {
+      font-size: 20px;
+    }
+  }
+  &.reserved {
+    background-color: #A8CD1B;
+  }
+}
