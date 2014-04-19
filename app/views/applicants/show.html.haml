@@ -48,10 +48,10 @@
     .form-group
       = f.label "Kirjoitelma:", class: "col-sm-2 control-label"
       .col-sm-10
-        = f.text_area :essay, class: "input-block-level form-control", rows: 10
+        = f.text_area :essay, class: "input-block-level form-control", rows: 30
     .form-group
       .col-sm-offset-2.col-sm-10
-        = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelmaa"), class: 'btn btn-primary'
+        = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'
 
 
 

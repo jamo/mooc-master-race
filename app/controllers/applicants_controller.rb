@@ -51,7 +51,7 @@ class ApplicantsController < ApplicationController
   def update
     respond_to do |format|
       if @applicant.update(applicant_params)
-        format.html { redirect_to @applicant, notice: 'Applicant was successfully updated.' }
+        format.html { redirect_to @applicant, notice: 'Kirjoitelma päivitetty.' }
         format.json { render :show, status: :ok, location: @applicant }
       else
         format.html { render :edit }

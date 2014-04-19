@@ -11,6 +11,7 @@ class InterviewsController < ApplicationController
     if params[:register] && @interview.free? && applicant?
       @interview.applicant = applicant?
       @interview.reserved!
+      flash[:notice] = "Aika varattu"
     end
 
     if params[:deregister]
@@ -18,6 +19,7 @@ class InterviewsController < ApplicationController
         @interview.free!
         @interview.applicant = nil
         applicant?.interview = nil
+        flash[:notice] = "Aijanvaraus peruttu"
       end
     end
 
