@@ -9,5 +9,5 @@
       %tbody
         - @interview_day.each do |day|
           %tr
-            %td= link_to day.date.strftime("%a %d.%M.%Y klo  %H:%M"), interview_day_path(day)
+            %td= link_to day.date.strftime("%a %d.%m.%Y klo  %H:%M"), interview_day_path(day)
             %td= day.applicants.count

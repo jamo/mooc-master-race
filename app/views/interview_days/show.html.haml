@@ -1,8 +1,7 @@
 - @interview_day.interviews.each do |interview|
   .jumbotron{class: interview.status}
     - applicant = interview.applicant
-    %p= interview
-    %p= interview.inspect
+    %h2= interview
     %ul
       %li= interview.status
       - unless applicant.nil?

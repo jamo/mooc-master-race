@@ -10,5 +10,12 @@
         = text_area_tag :questionary_notes, Settings.questionary_notes, class: "input-block-level form-control", rows: 10
 
       .form-group
-        .col-sm-offset-2.col-sm-10
+        .col-sm-10
           = submit_tag "Update", class: "btn btn-primary"
+.row-fluid
+  .col-xs-10
+    = form_tag admin_index_path, method: :get, :class => 'form-horizontal' do
+      =hidden_field_tag :refresh_from_tmc
+      .form-group
+        .col-sm-10
+          = submit_tag "Refresh data from tmc", class: "btn btn-warning"
