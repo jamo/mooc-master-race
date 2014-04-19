@@ -8,10 +8,15 @@ class InterviewsController < ApplicationController
   def update
     @interview = Interview.find(params[:id])
 
-    if params[:register] && @interview.free? && applicant?
-      @interview.applicant = applicant?
-      @interview.reserved!
-      flash[:notice] = "Aika varattu"
+    if params[:register] && applicant?
+
+      if @interview.free?
+        @interview.applicant = applicant?
+        @interview.reserved!
+        flash[:notice] = "Aika varattu"
+      else
+        flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
+      end
     end
 
     if params[:deregister]
