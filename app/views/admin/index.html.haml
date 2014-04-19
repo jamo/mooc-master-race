@@ -4,6 +4,10 @@
       .form-group
         = label_tag :email_template
         = text_area_tag :email_template, Settings.email_template, class: "input-block-level form-control", rows: 10
+      %pre
+        Using ERB templating system; you can access applicants fields - applicant is in @applicant -variable
+
+        Applicant(id: integer, name: string, nick: string, email: string, created_at: datetime, updated_at: datetime, week1: decimal, week2: decimal, week3: decimal, week4: decimal, week5: decimal, week6: decimal, week7: decimal, week8: decimal, week9: decimal, week10: integer, week11: integer, week12: integer, missing_points: string, key: string, interview_id: integer, essay: string, message_sent: boolean)
 
       .form-group
         = label_tag :questionary_notes

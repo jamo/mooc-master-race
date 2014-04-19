@@ -40,6 +40,12 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.json
   def show
     session[:applicant_token] = params[:id] unless current_user
+    @email = ERB.new(Settings.email_template).result(get_binding)
+    p EMAIL: @email
+  end
+
+  def get_binding
+    binding
   end
 
   # GET /applicants/1/edit
