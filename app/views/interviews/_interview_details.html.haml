@@ -17,7 +17,10 @@
       - else
         Varattu
     - elsif interview.reserved?
-      Varattu
+      -if admin?
+        = link_to interview.applicant.name, applicant_path(interview.applicant.key)
+      -else
+        Varattu
     - elsif interview.disabled?
       Tauko
     - elsif interview.free?
