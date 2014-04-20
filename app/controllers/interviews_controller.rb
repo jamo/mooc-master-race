@@ -9,12 +9,10 @@ class InterviewsController < ApplicationController
   def update
     @interview = Interview.find(params[:id])
 
-    @@lock ||= Mutex.new
 
 
-    @@lock.synchronize do
-      ActiveRecord::Base.transaction do
-
+    Applicant.transaction do
+      Interview.transaction do
         if params[:register] && applicant?
 
           if @interview.free? and applicant?.interview.nil?
@@ -39,6 +37,7 @@ class InterviewsController < ApplicationController
           end
         end
       end
+
     end
 
     respond_to do |format|
