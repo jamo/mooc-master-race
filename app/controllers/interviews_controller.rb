@@ -9,29 +9,34 @@ class InterviewsController < ApplicationController
   def update
     @interview = Interview.find(params[:id])
 
-    ActiveRecord::Base.transaction do
+    @@lock ||= Mutex.new
 
-      if params[:register] && applicant?
 
-        if @interview.free? and applicant?.interview.nil?
-          @interview.applicant = applicant?
-          @interview.reserved!
-          flash[:notice] = "Aika varattu"
-        else
-          flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
-        end
-      elsif params[:deregister]
-        if @interview.applicant = applicant? and applicant?.interview
-          @interview.free!
-          @interview.applicant = nil
-          applicant?.interview = nil
-          flash[:notice] = "Aijanvaraus peruttu"
-        end
-      elsif params[:status_change] && admin?
-        if params[:status_change] == "disable"
-          @interview.disabled!
-        elsif params[:status_change] == "enable"
-          @interview.free!
+    @@lock.synchronize do
+      ActiveRecord::Base.transaction do
+
+        if params[:register] && applicant?
+
+          if @interview.free? and applicant?.interview.nil?
+            @interview.applicant = applicant?
+            @interview.reserved!
+            flash[:notice] = "Aika varattu"
+          else
+            flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
+          end
+        elsif params[:deregister]
+          if @interview.applicant = applicant? and applicant?.interview
+            @interview.free!
+            @interview.applicant = nil
+            applicant?.interview = nil
+            flash[:notice] = "Aijanvaraus peruttu"
+          end
+        elsif params[:status_change] && admin?
+          if params[:status_change] == "disable"
+            @interview.disabled!
+          elsif params[:status_change] == "enable"
+            @interview.free!
+          end
         end
       end
     end
