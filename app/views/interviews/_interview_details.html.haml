@@ -1,8 +1,7 @@
 %tr{class: interview.status}
   %td.empty
   %td
-    %strong Starts at:
-    = interview.start_time.strftime("%H:%M")
+    %strong= interview.start_time.strftime("Alkaa: %a %d.%m.%Y klo %H:%M")
   - if admin?
     %td
       Interview at:
