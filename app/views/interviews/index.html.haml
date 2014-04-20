@@ -1,13 +1,19 @@
 .container
   .row
-    .col-md-6.col-md-offset-3
+    .col-md-3
+      %ul.nav.nav-pills.nav-stacked.day-list
+        - @interview_days.each do |day|
+          %li
+            %a{href: day.date.strftime("#%d-%m-%y")}= day.date.strftime("%a %d.%m.%y")
+
+
+    .col-md-9
       %table.table
         - @interview_days.each do |day|
           %thead
             %tr
               %th
-                %strong Day:
-                = day.date.strftime("%d.%m.%y")
+                %strong{id: day.date.strftime("%d-%m-%y")}= day.date.strftime("%a %d.%m.%y")
           %tbody
             - day.interviews.each do |interview|
 

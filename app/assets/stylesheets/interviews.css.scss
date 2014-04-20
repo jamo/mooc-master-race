@@ -14,13 +14,13 @@ ul.day-limiter {
 tr {
   &.free {
     background-color: #A8CD1B;
-  }
-  &.disabled {
-    background-color: #F3FAB6;
-  }
-  &.reserved {
-    background-color: #D9853B;
-  }
+}
+&.disabled {
+  background-color: #F3FAB6;
+}
+&.reserved {
+  background-color: #D9853B;
+}
 }
 tbody > tr{
 }
@@ -31,3 +31,25 @@ td.empty {
   width: 20px;
 }
 
+ul.day-list {
+
+  padding-top: 50px;
+  li {
+    border-radius: 4px;
+    background-color: #ee6557 /*#16a6b6*/;
+    a{
+      &:link {
+        color: white;
+      }
+      &:visited {
+        color: white;
+      }
+      &:hover {
+        color: white;
+      }
+      &:active {
+        color: white;
+      }
+    }
+  }
+}
