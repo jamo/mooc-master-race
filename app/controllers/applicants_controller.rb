@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ApplicantsController < ApplicationController
   before_action :set_applicant, only: [:show, :edit, :update, :destroy]
   skip_before_action :auth!, only: [:show]

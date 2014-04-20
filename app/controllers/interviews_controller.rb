@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class InterviewsController < ApplicationController
 
   def index
