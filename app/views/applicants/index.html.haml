@@ -41,6 +41,7 @@
       %table.table.table-striped.table-hover.table-bordered
         %thead#applicants-header
           %tr
+            %th= @applicants.count
             %th#message_sent= sortable_model_name(:message_sent)
             %th#essay= sortable_model_name(:essay)
             %th= sortable_model_name(:ready_for_interview)
@@ -56,8 +57,10 @@
 
             %th=t '.actions', :default => t("helpers.actions")
         %tbody
+          - id = 0
           - @applicants.each do |applicant|
             %tr
+              %td= id += 1
               %td= applicant.message_sent ? '✓' : '✘'
               %td= (applicant.essay && applicant.essay.blank?) ? '✓' : '✘'
               %td= applicant.ready_for_interview? ? '✓' : '✘'
