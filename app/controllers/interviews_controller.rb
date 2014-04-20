@@ -7,26 +7,26 @@ class InterviewsController < ApplicationController
 
 
   def update
-    @interview = Interview.find(params[:id])
-
-
 
     Applicant.transaction do
       Interview.transaction do
-        if params[:register] && applicant?
+        @interview = Interview.find(params[:id])
+        applicant = applicant?
+        if params[:register] && applicant
 
-          if @interview.free? and applicant?.interview.nil?
+          if @interview.free? and applicant.interview.nil?
             @interview.applicant = applicant?
+            applicant.interview = @interview
             @interview.reserved!
             flash[:notice] = "Aika varattu"
           else
             flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
           end
         elsif params[:deregister]
-          if @interview.applicant = applicant? and applicant?.interview
+          if @interview.applicant == applicant and applicant.interview
             @interview.free!
             @interview.applicant = nil
-            applicant?.interview = nil
+            applicant.interview = nil
             flash[:notice] = "Aijanvaraus peruttu"
           end
         elsif params[:status_change] && admin?
@@ -36,8 +36,9 @@ class InterviewsController < ApplicationController
             @interview.free!
           end
         end
+        applicant.save!
+        @interview.save!
       end
-
     end
 
     respond_to do |format|
