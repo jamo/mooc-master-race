@@ -11,7 +11,7 @@ class InterviewsController < ApplicationController
 
     if params[:register] && applicant?
 
-      if @interview.free?
+      if @interview.free? and applicant?.interview.nil?
         @interview.applicant = applicant?
         @interview.reserved!
         flash[:notice] = "Aika varattu"
