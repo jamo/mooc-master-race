@@ -11,17 +11,17 @@
           = select_tag :direction, options_for_select([['ASC', 'asc'], ['DESC', 'desc']], params[:direction])
       .form-group
         .col-sm-offset-2.col-sm-10
-          = label_tag :name,nil,  class: 'checkbox' do
+          = label_tag :show_points,nil,  class: 'checkbox' do
             = check_box_tag :show_points, 1, params[:show_points]
             Show weekly points
       .form-group
         .col-sm-offset-2.col-sm-10
-          = label_tag :name,nil,  class: 'checkbox' do
+          = label_tag :show_missing_points,nil,  class: 'checkbox' do
             = check_box_tag :show_missing_points, 1, params[:show_missing_points]
             Show missing_points
       .form-group
         .col-sm-offset-2.col-sm-10
-          = label_tag :name,nil,  class: 'checkbox' do
+          = label_tag :ready_for_exam,nil,  class: 'checkbox' do
             = check_box_tag :ready_for_exam, 1, params[:ready_for_exam]
             Show only ready for exam (no missing points and atleast 85% done for each week)
       -#.form-group
