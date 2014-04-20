@@ -9,34 +9,32 @@ class InterviewsController < ApplicationController
   def update
     @interview = Interview.find(params[:id])
 
-    if params[:register] && applicant?
+    ActiveRecord::Base.transaction do
 
-      if @interview.free? and applicant?.interview.nil?
-        @interview.applicant = applicant?
-        @interview.reserved!
-        flash[:notice] = "Aika varattu"
-      else
-        flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
+      if params[:register] && applicant?
+
+        if @interview.free? and applicant?.interview.nil?
+          @interview.applicant = applicant?
+          @interview.reserved!
+          flash[:notice] = "Aika varattu"
+        else
+          flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
+        end
+      elsif params[:deregister]
+        if @interview.applicant = applicant? and applicant?.interview
+          @interview.free!
+          @interview.applicant = nil
+          applicant?.interview = nil
+          flash[:notice] = "Aijanvaraus peruttu"
+        end
+      elsif params[:status_change] && admin?
+        if params[:status_change] == "disable"
+          @interview.disabled!
+        elsif params[:status_change] == "enable"
+          @interview.free!
+        end
       end
     end
-
-    if params[:deregister]
-      if @interview.applicant = applicant?
-        @interview.free!
-        @interview.applicant = nil
-        applicant?.interview = nil
-        flash[:notice] = "Aijanvaraus peruttu"
-      end
-    end
-
-    if params[:status_change] && admin?
-      if params[:status_change] == "disable"
-        @interview.disabled!
-      elsif params[:status_change] == "enable"
-        @interview.free!
-      end
-    end
-
 
     respond_to do |format|
       format.html do
