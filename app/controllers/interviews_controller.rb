@@ -36,8 +36,8 @@ class InterviewsController < ApplicationController
             @interview.free!
           end
         end
-        applicant.save!
-        @interview.save!
+        applicant.save! if applicant
+        @interview.save! if @interview
       end
     end
 
