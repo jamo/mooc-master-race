@@ -22,13 +22,15 @@ class ApplicantsController < ApplicationController
       params[:name] = 1
     end
 
-    condition = if params[:ready_for_exam]
+    condition = if params[:ready_for_exam] or params[:not_ready_for_exam]
       'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'
     end
 
     @applicants = if fields.any?
-                    if condition
+                    if params[:ready_for_exam]
                       Applicant.where(condition).order(fields.map{|f| [f => direction]})
+                    elsif params[:not_ready_for_exam]
+                      Applicant.where.not(condition).order(fields.map{|f| [f => direction]})
                     else
                       Applicant.order(fields.map{|f| [f => direction]})
                     end

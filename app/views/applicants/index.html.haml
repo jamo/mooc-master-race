@@ -21,9 +21,14 @@
             Show missing_points
       .form-group
         .col-sm-offset-2.col-sm-10
-          = label_tag :name,nil,  class: 'checkbox' do
+          = label_tag :name, nil,  class: 'checkbox' do
             = check_box_tag :ready_for_exam, 1, params[:ready_for_exam]
             Show only ready for exam (no missing points and atleast 85% done for each week)
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = label_tag :not_ready_for_exam, nil,  class: 'checkbox' do
+            = check_box_tag :not_ready_for_exam, 1, params[:not_ready_for_exam]
+            Show only those who are not ready for exam (missing points or under 85% done for some week)
       -#.form-group
         .col-sm-offset-2.col-sm-10
           = label_tag :name,nil,  class: 'checkbox' do
