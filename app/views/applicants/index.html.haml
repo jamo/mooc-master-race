@@ -70,7 +70,7 @@
               %td= applicant.message_sent ? '✓' : '✘'
               %td= applicant.essay.blank? ? '✘' : '✓'
               %td= applicant.ready_for_interview? ? '✓' : '✘'
-              %td= applicant.interview.nil?? ? '✘' : applicant.interview
+              %td= applicant.interview.nil? ? '✘' : applicant.interview
               %td= applicant.name
               %td= link_to applicant.nick, applicant_path(applicant.key)
               %td= applicant.email
