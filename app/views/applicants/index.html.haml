@@ -67,7 +67,7 @@
             %tr
               %td= id += 1
               %td= applicant.message_sent ? '✓' : '✘'
-              %td= (applicant.essay.nil? && applicant.essay.blank?) ? '✘' : '✓'
+              %td= applicant.essay.blank? ? '✘' : '✓'
               %td= applicant.ready_for_interview? ? '✓' : '✘'
               %td= applicant.name
               %td= link_to applicant.nick, applicant_path(applicant.key)
