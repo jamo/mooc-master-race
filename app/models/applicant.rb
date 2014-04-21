@@ -15,7 +15,11 @@ class Applicant < ActiveRecord::Base
     self.key
   end
 
-  def ready_for_interview?
+  def to_s
+    "#{self.name} - #{self.nick} "
+  end
+
+  def calc_if_ready_for_interview?
     self.week1 >= 85 and self.week2 >= 85 and self.week3 >= 85 and self.week4 >= 85 and
       self.week5 >= 85 and self.week6 >= 85 and self.week7 >= 85 and self.week8 >= 85 and self.week9 >= 85 and
       self.week10 >= 85 and self.week11 >= 85 and self.week12 >= 85 and self.missing_points == ""
@@ -28,6 +32,8 @@ class Applicant < ActiveRecord::Base
   class << self
     def update_all_data_with_tmc
       data = TmcConnection.new.download!
+      @modified = []
+      @ready_for_interview_status_has_changed = []
       participants = data[:data]
       week_data = data[:week_data]
 
@@ -41,15 +47,20 @@ class Applicant < ActiveRecord::Base
           nick: participant['username'],
           email: participant['email']
         )
-        # Let's update timestamps to see that we really have done smthing
-        applicant.touch
         update_week_percentage(applicant, participant['groups'])
         check_compulsary_exercises(applicant, participant, week_data)
+
+        @modified << applicant if applicant.changed?
+        applicant.save!
+        applicant.ready_for_interview = applicant.calc_if_ready_for_interview?
+
+        @ready_for_interview_status_has_changed << applicant if applicant.changed?
         applicant.save!
       end
 
-
-
+      Settings.last_modified = @modified
+      Settings.new_ready_for_interview = @ready_for_interview_status_has_changed
+      {all_modified: @modified, ready_for_interview_status_has_changed: @ready_for_interview_status_has_changed}
     end
 
     private

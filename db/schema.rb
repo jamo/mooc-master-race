@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418204505) do
+ActiveRecord::Schema.define(version: 20140421231548) do
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -19,23 +19,24 @@ ActiveRecord::Schema.define(version: 20140418204505) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "week1",          precision: 5, scale: 2
-    t.decimal  "week2",          precision: 5, scale: 2
-    t.decimal  "week3",          precision: 5, scale: 2
-    t.decimal  "week4",          precision: 5, scale: 2
-    t.decimal  "week5",          precision: 5, scale: 2
-    t.decimal  "week6",          precision: 5, scale: 2
-    t.decimal  "week7",          precision: 5, scale: 2
-    t.decimal  "week8",          precision: 5, scale: 2
-    t.decimal  "week9",          precision: 5, scale: 2
-    t.decimal  "week10",         precision: 5, scale: 0
-    t.decimal  "week11",         precision: 5, scale: 0
-    t.decimal  "week12",         precision: 5, scale: 0
-    t.string   "missing_points",                         default: ""
+    t.decimal  "week1",                         precision: 5, scale: 2
+    t.decimal  "week2",                         precision: 5, scale: 2
+    t.decimal  "week3",                         precision: 5, scale: 2
+    t.decimal  "week4",                         precision: 5, scale: 2
+    t.decimal  "week5",                         precision: 5, scale: 2
+    t.decimal  "week6",                         precision: 5, scale: 2
+    t.decimal  "week7",                         precision: 5, scale: 2
+    t.decimal  "week8",                         precision: 5, scale: 2
+    t.decimal  "week9",                         precision: 5, scale: 2
+    t.integer  "week10",              limit: 5
+    t.integer  "week11",              limit: 5
+    t.integer  "week12",              limit: 5
+    t.string   "missing_points",                                        default: ""
     t.string   "key"
     t.integer  "interview_id"
     t.string   "essay"
-    t.boolean  "message_sent",                           default: false
+    t.boolean  "message_sent",                                          default: false
+    t.boolean  "ready_for_interview",                                   default: false
   end
 
   add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id"
