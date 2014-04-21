@@ -34,4 +34,4 @@
       %h2 Updated in last refresh with tmc
       %ul
         - Settings.last_modified.each do |applicant|
-          %li= link_to applicant, applicants_path(applicant.key)
+          %li= link_to applicant, applicant_path(applicant.key)
