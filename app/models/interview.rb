@@ -5,6 +5,6 @@ class Interview < ActiveRecord::Base
 
 
   def to_s
-    "#{self.start_time.strftime("%a %d.%M.%Y klo  %H:%M")}"
+    "#{self.start_time.strftime("%a %d.%m.%Y klo  %H:%M")}"
   end
 end

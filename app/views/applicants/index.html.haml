@@ -50,6 +50,7 @@
             %th#message_sent= sortable_model_name(:message_sent)
             %th#essay= sortable_model_name(:essay)
             %th= sortable_model_name(:ready_for_interview)
+            %th= sortable_model_name(:interview_reserved)
             %th#name= sortable_model_name(:name)
             %th#nick= sortable_model_name(:nick)
             %th#email= sortable_model_name(:email)
@@ -69,6 +70,7 @@
               %td= applicant.message_sent ? '✓' : '✘'
               %td= applicant.essay.blank? ? '✘' : '✓'
               %td= applicant.ready_for_interview? ? '✓' : '✘'
+              %td= applicant.interview.nil?? ? '✘' : applicant.interview
               %td= applicant.name
               %td= link_to applicant.nick, applicant_path(applicant.key)
               %td= applicant.email
