@@ -27,10 +27,15 @@ class ApplicantsController < ApplicationController
                 elsif params[:filter_failed] && params[:failed_to]
                   week = params[:failed_to].to_i
                   1.upto(week).map {|i| "week#{i} < 85"}.join(" or ")
+                elsif params[:filter_not_failed] && params[:failed_to]
+                  week = params[:failed_to].to_i
+                  1.upto(week).map {|i| "week#{i} >= 85"}.join(" and ")
                 end
 
     @applicants = if fields.any?
                     if params[:ready_for_exam] || (params[:filter_failed] && params[:failed_to])
+                      Applicant.where(condition).order(fields.map{|f| [f => direction]})
+                    elsif (params[:filter_not_failed] && params[:failed_to])
                       Applicant.where(condition).order(fields.map{|f| [f => direction]})
                     elsif params[:not_ready_for_exam]
                       Applicant.where.not(condition).order(fields.map{|f| [f => direction]})

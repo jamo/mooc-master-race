@@ -10,6 +10,10 @@
           = label_tag :filter_failed, nil, class: 'checkbox' do
             = check_box_tag :filter_failed, 1, params[:filter_failed]
             Show only failed to week:
+        .col-sm-offset-2.col-sm-10
+          = label_tag :filter_not_failed, nil, class: 'checkbox' do
+            = check_box_tag :filter_not_failed, 1, params[:filter_not_failed]
+            Show only not failed to week:
       .form-group
         = label_tag :failed_to, nil, class: "col-sm-2 control-label"
         .col-sm-10
