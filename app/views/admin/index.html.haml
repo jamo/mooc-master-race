@@ -23,3 +23,15 @@
       .form-group
         .col-sm-10
           = submit_tag "Refresh data from tmc", class: "btn btn-warning"
+.row-fluid
+  .col-xs-10
+    - if Settings.new_ready_for_interview
+      %h2 Ready For interview status changed in last update with tmc
+      %ul
+        - Settings.new_ready_for_interview.each do |applicant|
+          %li= link_to applicant, applicants_path(applicant.key)
+    - if Settings.last_modified
+      %h2 Updated in last refresh with tmc
+      %ul
+        - Settings.last_modified.each do |applicant|
+          %li= link_to applicant, applicant_path(applicant.key)
