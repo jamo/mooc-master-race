@@ -15,7 +15,7 @@ class ApplicantsController < ApplicationController
                   :desc
                 end
 
-    interesting_orders = %w(message_sent essay name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
+    interesting_orders = %w(message_sent essay ready_for_interview name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
     if fields.empty?
       fields << :name
@@ -23,11 +23,14 @@ class ApplicantsController < ApplicationController
     end
 
     condition = if params[:ready_for_exam] or params[:not_ready_for_exam]
-      'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'
-    end
+                  'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'
+                elsif params[:filter_failed] && params[:failed_to]
+                  week = params[:failed_to].to_i
+                  1.upto(week).map {|i| "week#{i} < 85"}.join(" or ")
+                end
 
     @applicants = if fields.any?
-                    if params[:ready_for_exam]
+                    if params[:ready_for_exam] || (params[:filter_failed] && params[:failed_to])
                       Applicant.where(condition).order(fields.map{|f| [f => direction]})
                     elsif params[:not_ready_for_exam]
                       Applicant.where.not(condition).order(fields.map{|f| [f => direction]})
