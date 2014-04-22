@@ -21,7 +21,7 @@
       .form-group
         = label_tag :direction, nil, class: "col-sm-2 control-label"
         .col-sm-10
-          = select_tag :direction, options_for_select([['ASC', 'asc'], ['DESC', 'desc']], params[:direction])
+          = select_tag :direction, options_for_select([['DESC', 'desc'], ['ASC', 'asc']], params[:direction])
       .form-group
         .col-sm-offset-2.col-sm-10
           = label_tag :show_points, nil, class: 'checkbox' do
