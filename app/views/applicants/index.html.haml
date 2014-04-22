@@ -6,6 +6,15 @@
   .col-xs-12
     = form_tag applicants_path, method: :get, :class => 'form-horizontal' do
       .form-group
+        .col-sm-offset-2.col-sm-10
+          = label_tag :filter_failed, nil, class: 'checkbox' do
+            = check_box_tag :filter_failed, 1, params[:filter_failed]
+            Show only failed to week:
+      .form-group
+        = label_tag :failed_to, nil, class: "col-sm-2 control-label"
+        .col-sm-10
+          = select_tag :failed_to, options_for_select([['week1', '1'], ['week2', '2'], ['week3', '3'], ['week4', '4'], ['week5', '5'], ['week6', '6'], ['week7', '7'], ['week8', '8'], ['week9', '9'], ['week10', '10'], ['week11', '11'], ['week12', '12']], params[:failed_to])
+      .form-group
         = label_tag :direction, nil, class: "col-sm-2 control-label"
         .col-sm-10
           = select_tag :direction, options_for_select([['ASC', 'asc'], ['DESC', 'desc']], params[:direction])
