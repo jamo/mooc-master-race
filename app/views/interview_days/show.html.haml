@@ -2,6 +2,10 @@
   .jumbotron{class: interview.status}
     - applicant = interview.applicant
     %h2= interview
+    - if admin?
+      %h4
+        Interview at:
+        =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
     %ul
       %li= interview.status
       - unless applicant.nil?
