@@ -1,4 +1,5 @@
 - classs = (interview.start_time.beginning_of_day < Time.new.beginning_of_day) ? 'past' : ((interview.start_time.beginning_of_day.strftime("%y%m%d") == Time.new.beginning_of_day.strftime("%y%m%d")) ? 'today' : 'future')
+- btn_enabled = classs == 'past'
 %tr{class: [interview.status, classs]}
   %td.empty
   %td
@@ -16,7 +17,7 @@
         Minun varaukseni
         =form_for interview, class: "form-inline" do |f|
           = hidden_field_tag :deregister, 1
-          = f.submit "Perun ilmoittautumiseni", class: "btb btn-danger btn-xs"
+          = f.submit "Perun ilmoittautumiseni", disabled: btn_enabled, class: "btb btn-danger btn-xs"
       - else
         Varattu
     - elsif interview.reserved?
@@ -31,7 +32,7 @@
         -if current_user.not_yet_registerd
           =form_for interview, class: "form-inline" do |f|
             = hidden_field_tag :register, 1
-            = f.submit "Ilmoittaudu", class: "btb btn-primary btn-xs"
+            = f.submit "Ilmoittaudu", disabled: btn_enabled, class: "btb btn-primary btn-xs"
         - else
           Vapaa
       -elsif admin?
@@ -46,6 +47,6 @@
           = hidden_field_tag :status_change, "enable"
         = hidden_field_tag  :authenticity_token, form_authenticity_token
 
-        = f.submit (interview.free? ? "Disable" : "Enable"), class: "btb btn-primary btn-xs"
+        = f.submit (interview.free? ? "Disable" : "Enable"), disabled: btn_enabled, class: "btb btn-primary btn-xs"
     - elsif admin?
       Et voi muuttaa varattua aikaa
