@@ -8,6 +8,7 @@
 
       %tbody
         - @interview_day.each do |day|
-          %tr
+          - classs = (day.date.beginning_of_day < Time.new.beginning_of_day) ? 'past' : ((day.date.beginning_of_day.strftime("%y%m%d") == Time.new.beginning_of_day.strftime("%y%m%d")) ? 'today' : 'future')
+          %tr{class: classs}
             %td= link_to day.date.strftime("%a %d.%m.%Y klo  %H:%M"), interview_day_path(day)
             %td= day.applicants.count

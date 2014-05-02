@@ -23,3 +23,18 @@
     background-color: #A8CD1B;
   }
 }
+
+tr {
+  &.past {
+   background-color: #D1D1D1;
+  }
+
+  &.today{
+    background-color: #7CCC14;
+  }
+
+  &.future{
+  }
+
+
+}
