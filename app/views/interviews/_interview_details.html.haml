@@ -1,4 +1,5 @@
-%tr{class: interview.status}
+- classs = (interview.start_time.beginning_of_day < Time.new.beginning_of_day) ? 'past' : ((interview.start_time.beginning_of_day.strftime("%y%m%d") == Time.new.beginning_of_day.strftime("%y%m%d")) ? 'today' : 'future')
+%tr{class: [interview.status, classs]}
   %td.empty
   %td
     %strong

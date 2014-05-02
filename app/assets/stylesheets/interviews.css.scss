@@ -36,7 +36,17 @@ ul.day-list {
   padding-top: 50px;
   li {
     border-radius: 4px;
-    background-color: #ee6557 /*#16a6b6*/;
+    &.past {
+      background-color: #D1D1D1;
+    }
+
+    &.today{
+      background-color: #7CCC14;
+    }
+
+    &.future{
+      background-color: #ee6557 /*#16a6b6*/;
+    }
     a{
       &:link {
         color: white;
@@ -53,3 +63,7 @@ ul.day-list {
     }
   }
 }
+
+
+
+

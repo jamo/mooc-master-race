@@ -3,7 +3,8 @@
     .col-md-3
       %ul.nav.nav-pills.nav-stacked.day-list
         - @interview_days.each do |day|
-          %li
+          - classs = (day.date.beginning_of_day < Time.new.beginning_of_day) ? 'past' : ((day.date.beginning_of_day.strftime("%y%m%d") == Time.new.beginning_of_day.strftime("%y%m%d")) ? 'today' : 'future')
+          %li{class: classs}
             %a{href: day.date.strftime("#%d-%m-%y")}= day.date.strftime("%a %d.%m.%y")
 
 
