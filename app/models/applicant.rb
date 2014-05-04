@@ -92,14 +92,32 @@ class Applicant < ActiveRecord::Base
       str = ""
       missing_by_week.keys.each do |week|
         missing = missing_by_week[week]
-        unless missing.nil? or missing.length == 0
-          str << week
-          str << ": "
-          str << missing.join(",")
-          str << "  "
+        weeks_compulsory_points = compulsory_points[week]
+        unless missing.nil? or weeks_compulsory_points.nil?
+          unless enough_completed_exercises(missing, weeks_compulsory_points)
+            str << week
+            str << ": "
+            str << missing.join(",")
+            str << "  "
+          end
         end
       end
       applicant.missing_points = str
     end
+
+    def enough_completed_exercises(missing, weeks_compulsory_points)
+      week_groups = weeks_compulsory_points.group_by{|p| p.split(".").first}
+      missing_groups = missing.group_by{|p| p.split(".").first}
+
+      results = week_groups.keys.each_with_object({}) do |k, acc|
+        m_by_week = missing_groups[k]
+        points_by_week = week_groups[k]
+        acc[k] = m_by_week.nil? || points_by_week.length > m_by_week.length
+      end
+      truth = results.values.uniq
+
+      return truth.length == 1 && truth.first
+    end
+
   end
 end
