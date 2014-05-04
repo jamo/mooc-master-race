@@ -5,7 +5,18 @@
         - @interview_days.each do |day|
           - classs = (day.date.beginning_of_day < Time.new.beginning_of_day) ? 'past' : ((day.date.beginning_of_day.strftime("%y%m%d") == Time.new.beginning_of_day.strftime("%y%m%d")) ? 'today' : 'future')
           %li{class: classs}
-            %a{href: day.date.strftime("#%d-%m-%y")}= day.date.strftime("%a %d.%m.%y")
+            %a{href: day.date.strftime("#%d-%m-%y")}
+              = day.date.strftime("%a %d.%m.%y")
+              -if admin?
+                <br>
+                Free:
+                = day.interviews.where(status: 0).count
+                <br>
+                Disabled:
+                = day.interviews.where(status: 1).count
+                <br>
+                Reserved:
+                = day.interviews.where(status: 2).count
 
 
     .col-md-9
