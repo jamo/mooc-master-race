@@ -103,6 +103,17 @@ class Applicant < ActiveRecord::Base
         end
       end
       applicant.missing_points = str
+      str = ""
+      missing_by_week.keys.each do |week|
+        missing = missing_by_week[week]
+        unless missing.nil? or missing.length == 0
+          str << week
+          str << ": "
+          str << missing.join(",")
+          str << "  "
+        end
+      end
+      applicant.original_missing_points = str
     end
 
     def enough_completed_exercises(missing, weeks_compulsory_points)

@@ -22,6 +22,11 @@
     %br
     = @applicant.missing_points
 
+%p
+  - unless @applicant.original_missing_points.blank?
+    %strong= model_class.human_attribute_name(:puuttuvat_pisteet) + ':'
+    %br
+    = @applicant.original_missing_points
 
 %p
 

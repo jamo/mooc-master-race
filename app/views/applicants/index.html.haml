@@ -89,7 +89,7 @@
               %td= applicant.email
               %td=l applicant.created_at
               - if @show_missing_points
-                %td= applicant.missing_points
+                %td= applicant.original_missing_points
               - if @show_weekly_points
                 - 1.upto(12).each do |i|
                   %td= format_week_percents(applicant.send("week#{i}".to_sym))
