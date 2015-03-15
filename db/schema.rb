@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421231548) do
+ActiveRecord::Schema.define(version: 20140504175103) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -19,27 +22,28 @@ ActiveRecord::Schema.define(version: 20140421231548) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "week1",                         precision: 5, scale: 2
-    t.decimal  "week2",                         precision: 5, scale: 2
-    t.decimal  "week3",                         precision: 5, scale: 2
-    t.decimal  "week4",                         precision: 5, scale: 2
-    t.decimal  "week5",                         precision: 5, scale: 2
-    t.decimal  "week6",                         precision: 5, scale: 2
-    t.decimal  "week7",                         precision: 5, scale: 2
-    t.decimal  "week8",                         precision: 5, scale: 2
-    t.decimal  "week9",                         precision: 5, scale: 2
-    t.integer  "week10",              limit: 5
-    t.integer  "week11",              limit: 5
-    t.integer  "week12",              limit: 5
-    t.string   "missing_points",                                        default: ""
+    t.decimal  "week1",                   precision: 5, scale: 2
+    t.decimal  "week2",                   precision: 5, scale: 2
+    t.decimal  "week3",                   precision: 5, scale: 2
+    t.decimal  "week4",                   precision: 5, scale: 2
+    t.decimal  "week5",                   precision: 5, scale: 2
+    t.decimal  "week6",                   precision: 5, scale: 2
+    t.decimal  "week7",                   precision: 5, scale: 2
+    t.decimal  "week8",                   precision: 5, scale: 2
+    t.decimal  "week9",                   precision: 5, scale: 2
+    t.decimal  "week10",                  precision: 5, scale: 0
+    t.decimal  "week11",                  precision: 5, scale: 0
+    t.decimal  "week12",                  precision: 5, scale: 0
+    t.string   "missing_points",                                  default: ""
     t.string   "key"
     t.integer  "interview_id"
     t.string   "essay"
-    t.boolean  "message_sent",                                          default: false
-    t.boolean  "ready_for_interview",                                   default: false
+    t.boolean  "message_sent",                                    default: false
+    t.boolean  "ready_for_interview",                             default: false
+    t.string   "original_missing_points"
   end
 
-  add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id"
+  add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id", using: :btree
 
   create_table "interview_days", force: true do |t|
     t.datetime "date"
@@ -66,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140421231548) do
     t.datetime "updated_at"
   end
 
-  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
+  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"
