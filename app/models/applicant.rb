@@ -38,7 +38,8 @@ class Applicant < ActiveRecord::Base
       week_data = data[:week_data]
 
       participants.select! do |participant|
-        participant['hakee_yliopistoon_2014']
+        # TODO(jamo) make this key configurable
+        participant['hakee_yliopistoon_2015']
       end
 
       participants.each do |participant|

@@ -6,4 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-InterviewDay.init_db
+# TODO(jamo): make this more configurable
+# InterviewDay.init_db

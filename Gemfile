@@ -2,9 +2,8 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0'
+gem 'rails', '~>4.1.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -19,8 +18,7 @@ gem "twitter-bootstrap-rails", git: "https://github.com/seyhunak/twitter-bootstr
 
 gem 'httparty'
 
-gem "rails-settings-cached", "0.4.0"
-
+gem "rails-settings-cached", "~>0.4.0"
 
 gem 'therubyracer',  platforms: :ruby
 
@@ -39,6 +37,11 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'pg'
+group :production do
+  gem 'rails_12factor'
+end
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -48,4 +51,3 @@ gem 'bcrypt', '~> 3.1.7'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'puma'
-

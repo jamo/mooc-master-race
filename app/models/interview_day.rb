@@ -6,6 +6,7 @@ class InterviewDay < ActiveRecord::Base
   class << self
 
     def init_db
+      # TODO(jamo): run this later with new updated info
       interview_days = (DateTime.new(2014,4,25)..DateTime.new(2014,5,16)).map do |day|
         next unless is_weekday?(day)
         day = day.change({hour: 8 })
