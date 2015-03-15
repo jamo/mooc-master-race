@@ -47,6 +47,10 @@ class Applicant < ActiveRecord::Base
           nick: participant['username'],
           email: participant['email']
         )
+        applicant.name = participant['koko_nimi']
+        applicant.nick = participant['username']
+        applicant.email = participant['email']
+
         update_week_percentage(applicant, participant['groups'])
         check_compulsary_exercises(applicant, participant, week_data)
 

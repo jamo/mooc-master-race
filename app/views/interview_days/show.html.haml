@@ -1,7 +1,6 @@
 - @interview_day.interviews.each do |interview|
-  .jumbotron{class: interview.status}
-    - applicant = interview.applicant
-    %h2= interview
+  = render 'applicant_details', applicant: interview.applicant, interview: interview
+  -# %h2= interview
     - if admin?
       %h4
         Interview at:
@@ -15,5 +14,14 @@
     -if applicant
       %pre= applicant.essay
       %pre= Settings.questionary_notes
+    - if admin?
+      =form_for applicant, remote: true, html: {class: "change-interview-status form-inline"} do |f|
+        - if applicant.arrived?
+          = hidden_field_tag :mark_as_arrived, false
+        - if interview.disabled?
+          = hidden_field_tag :mark_as_arrived, true
+        = hidden_field_tag :applicant_id, applicant.id
+        = hidden_field_tag  :authenticity_token, form_authenticity_token
 
+        = f.submit (applicant.arrived? ? "revert" : "arrived"), disabled: btn_enabled, class: "btb btn-primary btn-xs"
 

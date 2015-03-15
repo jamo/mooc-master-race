@@ -4,6 +4,12 @@
 
 .jumbotron{
 
+  &.future{
+    background-color: #0af !important;
+  }
+  &.past{
+    background-color: #A8A7A8 !important;
+  }
   &.free {
     background-color: #D9853B;
   }
