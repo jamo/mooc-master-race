@@ -15,7 +15,7 @@ class TmcConnection
 
   private
   def fetch_week_datas(auth)
-    base_url = "http://tmc.mooc.fi/mooc/courses/18/points/"
+    base_url = "http://tmc.mooc.fi/mooc/courses/27/points/"
     weeks = %w(1 2 3 4 5 6 7 8 9 10 11 12)
     rest = ".json?api_version=7"
     week_data = {}
