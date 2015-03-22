@@ -23,13 +23,13 @@ class ApplicantsController < ApplicationController
     end
 
     condition = if params[:ready_for_exam] or params[:not_ready_for_exam]
-                  'week1 >= 85 and week2 >= 85 and week3 >= 85 and week4 >= 85 and week5 >= 85 and week6 >= 85 and week7 >= 85 and week8 >= 85 and week9 >= 85 and week10 >= 85 and week11 >= 85 and week12 >= 85 and missing_points == ""'
+                  'week1 >= 90 and week2 >= 90 and week3 >= 90 and week4 >= 90 and week5 >= 90 and week6 >= 90 and week7 >= 90 and week8 >= 90 and week9 >= 90 and week10 >= 90 and week11 >= 90 and week12 >= 90 and missing_points == ""'
                 elsif params[:filter_failed] && params[:failed_to]
                   week = params[:failed_to].to_i
-                  1.upto(week).map {|i| "week#{i} < 85"}.join(" or ")
+                  1.upto(week).map {|i| "week#{i} < 90"}.join(" or ")
                 elsif params[:filter_not_failed] && params[:failed_to]
                   week = params[:failed_to].to_i
-                  1.upto(week).map {|i| "week#{i} >= 85"}.join(" and ")
+                  1.upto(week).map {|i| "week#{i} >= 90"}.join(" and ")
                 end
 
     @applicants = if fields.any?

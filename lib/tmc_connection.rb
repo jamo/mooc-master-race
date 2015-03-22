@@ -6,7 +6,7 @@ class TmcConnection
     # TODO(jamo): make course configurable
     Rails.cache.fetch('user_info', expires_in: 5.minutes) do
       auth = {username: Settings.tmc_username, password: Settings.tmc_password}
-      url = "http://tmc.mooc.fi/mooc/participants.json?api_version=7&utf8=%E2%9C%93&filter_koko_nimi=&column_username=1&column_email=1&column_koko_nimi=1&column_hakee_yliopistoon_2015=1&group_completion_course_id=27"
+      url = "https://tmc.mooc.fi/mooc/participants.json?api_version=7&utf8=%E2%9C%93&filter_koko_nimi=&column_username=1&column_email=1&column_koko_nimi=1&column_hakee_yliopistoon_2015=1&group_completion_course_id=27"
       user_info = JSON.parse(HTTParty.get(url, basic_auth: auth).body)['participants']
       week_data = fetch_week_datas(auth)
       { data: user_info.clone, week_data: week_data.dup, time: Time.now}
@@ -15,7 +15,7 @@ class TmcConnection
 
   private
   def fetch_week_datas(auth)
-    base_url = "http://tmc.mooc.fi/mooc/courses/27/points/"
+    base_url = "https://tmc.mooc.fi/mooc/courses/27/points/"
     weeks = %w(1 2 3 4 5 6 7 8 9 10 11 12)
     rest = ".json?api_version=7"
     week_data = {}

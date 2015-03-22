@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504175103) do
+ActiveRecord::Schema.define(version: 20140509054658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20140504175103) do
     t.boolean  "message_sent",                                    default: false
     t.boolean  "ready_for_interview",                             default: false
     t.string   "original_missing_points"
+    t.boolean  "arrived"
+    t.datetime "arrival_time"
   end
 
   add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id", using: :btree

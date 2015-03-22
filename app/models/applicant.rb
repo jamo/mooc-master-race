@@ -20,9 +20,9 @@ class Applicant < ActiveRecord::Base
   end
 
   def calc_if_ready_for_interview?
-    self.week1 >= 85 and self.week2 >= 85 and self.week3 >= 85 and self.week4 >= 85 and
-      self.week5 >= 85 and self.week6 >= 85 and self.week7 >= 85 and self.week8 >= 85 and self.week9 >= 85 and
-      self.week10 >= 85 and self.week11 >= 85 and self.week12 >= 85 and self.missing_points == ""
+    self.week1 >= 90 and self.week2 >= 90 and self.week3 >= 90 and self.week4 >= 90 and
+      self.week5 >= 90 and self.week6 >= 90 and self.week7 >= 90 and self.week8 >= 90 and self.week9 >= 90 and
+      self.week10 >= 90 and self.week11 >= 90 and self.week12 >= 90 and self.missing_points == ""
   end
 
   def not_yet_registerd
@@ -72,17 +72,23 @@ class Applicant < ActiveRecord::Base
 
     def update_week_percentage(applicant, groups)
       1.upto(12).each do |i|
-        details = groups["viikko#{i}"]
+        id = if i < 10
+               "0#{i}"
+             else
+               "#{i}"
+             end
+        details = groups["viikko#{id}"]
         result = details ? (details['points'].to_f / details['total'].to_f) * 100 : -1
         applicant.send("week#{i}=".to_sym, result)
       end
     end
 
     def check_compulsary_exercises(applicant, participant, week_data)
-      compulsory_points = {'6' => %w(102.1 102.2 102.3 103.1 103.2 103.3), '7' => %w(116.1 116.2 116.3),
-                           '8' => %w(124.1 124.2 124.3 124.4), '9' => %w(134.1 134.2 134.3 134.4 134.5),
-                           '10' => %w(141.1 141.2 141.3 141.4), '11' => %w(151.1 151.2 151.3 151.4),
-                           '12' => %w(157.1 157.2 157.3 157.4 157.5 157.6 157.7 158)}
+      compulsory_points = {}
+                          #{'6' => %w(102.1 102.2 102.3 103.1 103.2 103.3), '7' => %w(116.1 116.2 116.3),
+                          # '8' => %w(124.1 124.2 124.3 124.4), '9' => %w(134.1 134.2 134.3 134.4 134.5),
+                          # '10' => %w(141.1 141.2 141.3 141.4), '11' => %w(151.1 151.2 151.3 151.4),
+                          # '12' => %w(157.1 157.2 157.3 157.4 157.5 157.6 157.7 158)}
 
       points_by_week = week_data.keys.each_with_object({}) do |week, points_by_week|
         points_by_week[week] = week_data[week][participant['username']]

@@ -65,7 +65,7 @@
             %th#ready_for_interview= sortable_model_name(:ready_for_interview)
             %th#interview_id
               = sortable_model_name(:interview_reserved)
-              = "#{Applicant.where("interview_id not null").count}/#{Applicant.where("interview_id is null").count}"
+              = "#{Applicant.where("interview_id is not null").count}/#{Applicant.where("interview_id is null").count}"
 
 
             %th#name= sortable_model_name(:name)
