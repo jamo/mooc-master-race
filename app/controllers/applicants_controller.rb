@@ -15,7 +15,7 @@ class ApplicantsController < ApplicationController
                   :desc
                 end
 
-    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12)
+    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
     if fields.empty?
       fields << :name
@@ -23,7 +23,7 @@ class ApplicantsController < ApplicationController
     end
 
     condition = if params[:ready_for_exam] or params[:not_ready_for_exam]
-                  'week1 >= 90 and week2 >= 90 and week3 >= 90 and week4 >= 90 and week5 >= 90 and week6 >= 90 and week7 >= 90 and week8 >= 90 and week9 >= 90 and week10 >= 90 and week11 >= 90 and week12 >= 90 and missing_points == ""'
+                  'week1 >= 90 and week2 >= 90 and week3 >= 90 and week4 >= 90 and week5 >= 90 and week6 >= 90 and week7 >= 90 and week8 >= 90 and week9 >= 90 and week10 >= 90 and week11 >= 90 and week12 >= 90and week13 >= 90 and week14 >= 90'
                 elsif params[:filter_failed] && params[:failed_to]
                   week = params[:failed_to].to_i
                   1.upto(week).map {|i| "week#{i} < 90"}.join(" or ")

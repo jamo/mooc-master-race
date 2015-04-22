@@ -9,7 +9,7 @@
   - if admin?
     %td
       Interview at:
-      =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
+      =(interview.start_time + 2.hours + 45.minutes).strftime("%H:%M")
 
   %td
     - if interview.reserved? and applicant?

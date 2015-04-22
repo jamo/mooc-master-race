@@ -71,7 +71,7 @@ class Applicant < ActiveRecord::Base
     private
 
     def update_week_percentage(applicant, groups)
-      1.upto(12).each do |i|
+      1.upto(14).each do |i|
         id = if i < 10
                "0#{i}"
              else

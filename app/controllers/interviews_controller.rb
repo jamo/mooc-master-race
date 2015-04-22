@@ -2,7 +2,7 @@
 class InterviewsController < ApplicationController
 
   def index
-    @interview_days = InterviewDay.all.includes(:interviews, :applicants)
+    @interview_days = InterviewDay.all.includes(:interviews, :applicants).order('interviews.start_time ASC')
   end
 
 
