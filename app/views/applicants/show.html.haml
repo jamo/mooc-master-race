@@ -27,18 +27,34 @@
     %strong= model_class.human_attribute_name(:puuttuvat_pisteet) + ':'
     %br
     = @applicant.original_missing_points
+%p
+  %strong= model_class.human_attribute_name(:selitystehtävät) + ':'
+  %br
+
+  = list_explanations(@applicant.explanations)
 
 %p
 
   %table.table.table-striped.table-hover.table-bordered
     %thead
       %tr
-        - 1.upto(12).each do |i|
+        %th Type
+        - 1.upto(14).each do |i|
           %th= model_class.human_attribute_name("Viikko #{i}".to_sym)
     %tbody
       %tr
-        - 1.upto(12).each do |i|
+        %td All
+        - 1.upto(14).each do |i|
           %td= format_week_percents(@applicant.send("week#{i}".to_sym))
+      %tr
+        %td TMC
+        - 1.upto(14).each do |i|
+          %td= format_week_percents(@applicant.send("only_tmc_week#{i}".to_sym))
+
+  - if admin?
+    #ul
+      - 1.upto(14).each do |i|
+        %li= @applicant.send("points_week#{i}".to_sym)
 
 %p
 
@@ -53,14 +69,12 @@
     .form-group
       = f.label "Kirjoitelma:", class: "col-sm-2 control-label"
       .col-sm-10
-        = f.text_area :essay, class: "input-block-level form-control", rows: 30
+        = f.text_area :essay, class: "input-block-level form-control", rows: 30, disabled: admin?
     .form-group
       .col-sm-offset-2.col-sm-10
         = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'
 
 
-
-- if admin?
   = form_for @applicant, html: {class: "form-horizontal"} do |f|
     .form-group
       .col-sm-offset-2.col-sm-10
@@ -73,6 +87,12 @@
         = f.submit "Update message sent status", class: "btn btn-warning"
 
   .jumbotron
+    %h3 Title:
+    %p= raw @title
     %h3 Email template:
     %p= raw @email
 
+  = form_for @applicant, method: :post, url: applicant_email_path(@applicant.key), html: {class: "form-horizontal"} do |f|
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = f.submit "Send email", class: "btn btn-warning"

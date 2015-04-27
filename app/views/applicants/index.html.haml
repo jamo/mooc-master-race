@@ -34,6 +34,11 @@
             Show missing_points
       .form-group
         .col-sm-offset-2.col-sm-10
+          = label_tag :show_explanations, nil, class: 'checkbox' do
+            = check_box_tag :show_explanations, 1, params[:show_explanations]
+            Show explanations
+      .form-group
+        .col-sm-offset-2.col-sm-10
           = label_tag :ready_for_exam, nil, class: 'checkbox' do
             = check_box_tag :ready_for_exam, 1, params[:ready_for_exam]
             Show only ready for exam (no missing points and atleast 90% done for each week)
@@ -74,6 +79,8 @@
             %th#created_at= sortable_model_name(:created_at)
             - if @show_missing_points
               %th#missing_points= sortable_model_name(:missing_points)
+            - if @show_explanations
+              %th#explanations= sortable_model_name(:explanations)
             - if @show_weekly_points
               - 1.upto(14).each do |i|
                 %th{id: "week#{i}"}= sortable_model_name("week#{i}".to_sym)
@@ -94,6 +101,8 @@
               %td=l applicant.created_at
               - if @show_missing_points
                 %td= applicant.original_missing_points
+              - if @show_explanations
+                %td= list_explanations(applicant.explanations)
               - if @show_weekly_points
                 - 1.upto(14).each do |i|
                   %td= format_week_percents(applicant.send("week#{i}".to_sym))

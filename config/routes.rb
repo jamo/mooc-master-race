@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :interview_days
   resources :admin
 
+  post 'applicants/:id/send_email', to: 'applicants#send_email', as: 'applicant_email'
+
 
   root to: 'applicants#index'
 

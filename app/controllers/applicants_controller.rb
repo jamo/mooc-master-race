@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class ApplicantsController < ApplicationController
-  before_action :set_applicant, only: [:show, :edit, :update, :destroy]
+  before_action :set_applicant, only: [:show, :edit, :update, :destroy, :send_email]
   skip_before_action :auth!, only: [:show]
 
   # GET /applicants
@@ -9,13 +9,14 @@ class ApplicantsController < ApplicationController
     respond_access_denied unless admin?
     @show_missing_points = params[:show_missing_points]
     @show_weekly_points = params[:show_points]
+    @show_explanations = params[:show_explanations]
     direction = if params[:direction] == "asc"
                   :asc
                 else
                   :desc
                 end
 
-    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14)
+    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14 explanations)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
     if fields.empty?
       fields << :name
@@ -51,8 +52,17 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.json
   def show
     session[:applicant_token] = params[:id] unless current_user
+    @title = Settings.email_title
     @email = ERB.new(Settings.email_template).result(get_binding)
-    p EMAIL: @email
+  end
+
+  def send_email
+    session[:applicant_token] = params[:id] unless current_user
+    @email = ERB.new(Settings.email_template).result(get_binding)
+    @title = Settings.email_title
+    SignUpMailer.sign_up(@applicant.email, @title, @email).deliver!
+    @applicant.update_attributes(message_sent: true)
+    redirect_to applicant_path(@applicant.key), notice: 'Email sent'
   end
 
   def get_binding
