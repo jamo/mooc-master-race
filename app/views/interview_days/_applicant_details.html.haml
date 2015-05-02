@@ -1,0 +1,60 @@
+- classs = if applicant && applicant.arrival_time
+  - (Time.now > (applicant.arrival_time + 2.hours + 30.minutes)) ? "past" : "future"
+-else
+  - "no"
+.jumbotron{class: [interview.status, classs, 'interview_details']}
+  - applicant = interview.applicant
+  - if admin? || apprentice?
+    -if interview.free?
+      %h3
+        Not reserved:
+        = interview
+    - elsif interview.disabled?
+      %h3
+        Break:
+        = interview
+    -else
+      %h3
+        - if admin?
+          = link_to applicant.name, applicant_path(applicant.key)
+        - if apprentice?
+          = applicant.name
+        \-
+        - if admin?
+          = link_to applicant.nick, applicant_path(applicant.key)
+        - if apprentice?
+          = applicant.nick
+        = interview
+        \-
+        Interview at:
+        =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
+      - unless applicant.nil?
+        %h4
+          Arrived:
+          = applicant.arrived? ? "\u2713" : "\u2718"
+          -if applicant.arrival_time
+            <br>
+            Saapui:
+            =  applicant.arrival_time.strftime("%H:%M")
+            <br>
+            Koe päättyy:
+            = (applicant.arrival_time + 2.hours + 30.minutes).strftime("%H:%M")
+            <br>
+          -#=(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
+  %ul
+  -if applicant && admin?
+    %pre= applicant.essay
+    %pre= Settings.questionary_notes
+  - if (admin? || apprentice?) && applicant
+    =form_for applicant, url: interview_day_path(interview.interview_day), remote: true, html: {class: "toggle-arrival-status form-inline"} do |f|
+      - if applicant.arrived?
+        = hidden_field_tag :mark_as_not_arrived, 1
+      - else
+        = hidden_field_tag :mark_as_arrived, 1
+      = hidden_field_tag :interview_id, interview.id
+      = hidden_field_tag :applicant_id, applicant.id
+      = hidden_field_tag  :authenticity_token, form_authenticity_token
+      = datetime_local_field 'applicant', 'arrival_time'
+
+      = f.submit (applicant.arrived? ? "revert" : "mark as arrived"), class: "btn btn-primary btn-xs"
+
