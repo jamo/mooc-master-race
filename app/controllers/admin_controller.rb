@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   def index
-    return access_denied unless admin?
+    return respond_access_denied unless admin?
 
     if params[:refresh_from_tmc]
       Applicant.update_all_data_with_tmc

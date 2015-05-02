@@ -6,6 +6,7 @@ class InterviewsController < ApplicationController
   end
 
   def update
+    return respond_access_denied if apprentice?
     Applicant.transaction do
       Interview.transaction do
         @interview = Interview.find(params[:id])

@@ -1,27 +1,3 @@
+%h1= @interview_day.date.strftime("%a %d.%m.%Y")
 - @interview_day.interviews.each do |interview|
   = render 'applicant_details', applicant: interview.applicant, interview: interview
-  -# %h2= interview
-    - if admin?
-      %h4
-        Interview at:
-        =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
-    %ul
-      %li= interview.status
-      - unless applicant.nil?
-        %li= link_to applicant.name, applicant_path(applicant.key)
-        %li= link_to applicant.nick, applicant_path(applicant.key)
-        %li= link_to applicant.email, applicant_path(applicant.key)
-    -if applicant
-      %pre= applicant.essay
-      %pre= Settings.questionary_notes
-    - if admin?
-      =form_for applicant, remote: true, html: {class: "change-interview-status form-inline"} do |f|
-        - if applicant.arrived?
-          = hidden_field_tag :mark_as_arrived, false
-        - if interview.disabled?
-          = hidden_field_tag :mark_as_arrived, true
-        = hidden_field_tag :applicant_id, applicant.id
-        = hidden_field_tag  :authenticity_token, form_authenticity_token
-
-        = f.submit (applicant.arrived? ? "revert" : "arrived"), disabled: btn_enabled, class: "btb btn-primary btn-xs"
-

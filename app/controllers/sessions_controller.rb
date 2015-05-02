@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
     p PASSWD: params[:password]
     if user && user.authenticate(params[:user][:password])
       session[:user_id] = user.id
+      return redirect_to interview_days_path, notice: "Welcome!" if user.apprentice?
       redirect_to applicants_path, notice: "Welcome!"
     else
       flash[:error] = "Invalid Username or Password" unless flash[:error]

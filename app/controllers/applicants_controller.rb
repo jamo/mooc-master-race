@@ -6,7 +6,8 @@ class ApplicantsController < ApplicationController
   # GET /applicants
   # GET /applicants.json
   def index
-    respond_access_denied unless admin?
+    return respond_access_denied unless admin?
+    return respond_access_denied if apprentice?
     @show_missing_points = params[:show_missing_points]
     @show_weekly_points = params[:show_points]
     @show_explanations = params[:show_explanations]
@@ -51,12 +52,14 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1
   # GET /applicants/1.json
   def show
+    return respond_access_denied if apprentice?
     session[:applicant_token] = params[:id] unless current_user
     @title = Settings.email_title
     @email = ERB.new(Settings.email_template).result(get_binding)
   end
 
   def send_email
+    return respond_access_denied if apprentice?
     session[:applicant_token] = params[:id] unless current_user
     @email = ERB.new(Settings.email_template).result(get_binding)
     @title = Settings.email_title
@@ -71,6 +74,7 @@ class ApplicantsController < ApplicationController
 
   # GET /applicants/1/edit
   def edit
+    return respond_access_denied if apprentice?
   end
 
   # PATCH/PUT /applicants/1

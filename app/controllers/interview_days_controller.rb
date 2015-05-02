@@ -9,12 +9,13 @@ class InterviewDaysController < ApplicationController
   end
 
   def update
+    return respond_access_denied unless admin? || apprentice?
     @interview = Interview.find(params[:interview_id])
     @applicant = Applicant.find(params[:applicant_id])
     Applicant.transaction do
       Interview.transaction do
         InterviewDay.transaction do
-          if admin?
+          if admin? || apprentice?
             if params[:mark_as_arrived]
               @applicant.arrived = true
               if params[:applicant][:arrival_time]
@@ -33,13 +34,13 @@ class InterviewDaysController < ApplicationController
           end
         end
       end
-      respond_to do |format|
-        format.html do
-          redirect_to @interview_day
-        end
-        format.js do
-          render :partial => 'interview_days/applicant_details', :locals => { :applicant => @applicant, interview: @interview }
-        end
+    end
+    respond_to do |format|
+      format.html do
+        redirect_to @interview_day
+      end
+      format.js do
+        render :partial => 'interview_days/applicant_details', :locals => { :applicant => @applicant, interview: @interview }
       end
     end
   end

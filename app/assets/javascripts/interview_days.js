@@ -19,7 +19,6 @@ function setListenerOn2(elem){
     console.log(xhr);
     console.log(tr);
     var text = $(xhr.responseText);
-    console.log("moooi");
     tr.replaceWith(text);
     setListenerOn2(text);
   });
