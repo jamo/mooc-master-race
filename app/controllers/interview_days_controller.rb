@@ -5,11 +5,11 @@ class InterviewDaysController < ApplicationController
   end
 
   def show
-    @interview_day = InterviewDay.find(params[:id])
+    @interview_day = InterviewDay.where(id: params[:id]).includes(:interviews).order('interviews.start_time ASC').first
   end
 
   def update
-    @interview = Interview.find(params[:id])
+    @interview = Interview.find(params[:interview_id])
     @applicant = Applicant.find(params[:applicant_id])
     Applicant.transaction do
       Interview.transaction do
@@ -17,15 +17,16 @@ class InterviewDaysController < ApplicationController
           if admin?
             if params[:mark_as_arrived]
               @applicant.arrived = true
+              if params[:applicant][:arrival_time]
+                begin
+                  time = params[:applicant][:arrival_time]
+                  @applicant.arrival_time = DateTime.parse(time)
+                rescue
+                end
+              end
             elsif params[:mark_as_not_arrived]
               @applicant.arrived = false
-            end
-            if params[:applicant][:arrival_time]
-              begin
-                time = params[:applicant][:arrival_time]
-                @applicant.arrival_time = DateTime.parse(time)
-              rescue
-              end
+              @applicant.arrival_time = nil
             end
             @applicant.save! if @applicant
             @interview.save! if @interview

@@ -9,15 +9,18 @@
   - if admin?
     %td
       Interview at:
-      =(interview.start_time + 2.hours + 45.minutes).strftime("%H:%M")
+      =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
 
   %td
     - if interview.reserved? and applicant?
       -if interview.applicant == applicant?
         Minun varaukseni
-        =form_for interview, class: "form-inline" do |f|
-          = hidden_field_tag :deregister, 1
-          = f.submit "Perun ilmoittautumiseni", disabled: btn_enabled, class: "btb btn-danger btn-xs"
+        - if applicant? && applicant?.arrived?
+          Et voi enää perua ilmoittautumistasi
+        -else
+          =form_for interview, class: "form-inline" do |f|
+            = hidden_field_tag :deregister, 1
+            = f.submit "Perun ilmoittautumiseni", disabled: btn_enabled, class: "btb btn-danger btn-xs"
       - else
         Varattu
     - elsif interview.reserved?

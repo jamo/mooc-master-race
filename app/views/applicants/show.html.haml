@@ -75,24 +75,26 @@
         = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'
 
 
-  = form_for @applicant, html: {class: "form-horizontal"} do |f|
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = label_tag do
-            = f.check_box :message_sent
-            Message sent
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        = f.submit "Update message sent status", class: "btn btn-warning"
+- if admin?
+  %p
+    = form_for @applicant, html: {class: "form-horizontal"} do |f|
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          .checkbox
+            = label_tag do
+              = f.check_box :message_sent
+              Message sent
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = f.submit "Update message sent status", class: "btn btn-warning"
 
-  .jumbotron
-    %h3 Title:
-    %p= raw @title
-    %h3 Email template:
-    %p= raw @email
+    .jumbotron
+      %h3 Title:
+      %p= raw @title
+      %h3 Email template:
+      %p= raw @email
 
-  = form_for @applicant, method: :post, url: applicant_email_path(@applicant.key), html: {class: "form-horizontal"} do |f|
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        = f.submit "Send email", class: "btn btn-warning"
+    = form_for @applicant, method: :post, url: applicant_email_path(@applicant.key), html: {class: "form-horizontal"} do |f|
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = f.submit "Send email", class: "btn btn-warning"

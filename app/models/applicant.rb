@@ -18,8 +18,8 @@ class Applicant < ActiveRecord::Base
     11 => ['Polymorfismi', 'Perinnästä'],
     12 => ['Javan API ja PrintWriter', 'Rajapintojen hyötyjä'],
     13 => ['Tarkkailija', 'Vanha ohjan koe I'],
-    14 => ['Koodin parantelua'],
-  }
+    14 => ['Koodin parantelua', 'Vanha ohjan koe II'],
+  }.freeze
 
   def set_key
     self.key = SecureRandom.uuid
@@ -44,6 +44,10 @@ class Applicant < ActiveRecord::Base
   end
 
   class << self
+    def expls
+      EXPLS
+    end
+
     def update_all_data_with_tmc
       data = TmcConnection.new.download!
       @modified = []
@@ -95,7 +99,7 @@ class Applicant < ActiveRecord::Base
                "#{i}"
              end
         weeks_explanations = EXPLS[i] || []
-        expls ||= {}
+        expls ||= []
 
         done_by_participant = weeks_explanations.map do |e|
           expls.select {|ex| ex == e}
@@ -109,7 +113,7 @@ class Applicant < ActiveRecord::Base
         if details.nil?
           applicant.send("week#{i}=".to_sym, -1.0)
           applicant.send("only_tmc_week#{i}=".to_sym, -1.0)
-          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points none : TMC max none")
+          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points none : TMC max none : expls: #{expls}")
         else
           tmc_points = details['points'].to_f
           tmc_total = details['total'].to_f
@@ -117,7 +121,7 @@ class Applicant < ActiveRecord::Base
           applicant.send("week#{i}=".to_sym, result)
           only_tmc = (tmc_points / tmc_total) * 100;
           applicant.send("only_tmc_week#{i}=".to_sym, only_tmc)
-          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points #{tmc_points} : TMC max #{tmc_total}")
+          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points #{tmc_points} : TMC max #{tmc_total}: expls: #{done_by_participant}")
         end
       end
     end

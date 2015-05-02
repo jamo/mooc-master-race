@@ -76,6 +76,7 @@ class ApplicantsController < ApplicationController
   # PATCH/PUT /applicants/1
   # PATCH/PUT /applicants/1.json
   def update
+    return respond_access_denied if @applicant.arrived?
     respond_to do |format|
       if @applicant.update(applicant_params)
         format.html { redirect_to @applicant, notice: 'Kirjoitelma päivitetty.' }

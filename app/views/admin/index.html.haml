@@ -21,6 +21,14 @@
           = submit_tag "Update", class: "btn btn-primary"
 .row-fluid
   .col-xs-10
+    %h2 Registerd explanation exercises:
+    %dl.dl-horizontal
+      - Applicant.expls.each do |e|
+        %dt=e[0]
+        %dd=e[1].join(", ")
+.row-fluid
+  .col-xs-10
+    %h3 Update data
     = form_tag admin_index_path, method: :get, :class => 'form-horizontal' do
       =hidden_field_tag :refresh_from_tmc
       .form-group

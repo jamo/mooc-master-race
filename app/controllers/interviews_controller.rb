@@ -5,9 +5,7 @@ class InterviewsController < ApplicationController
     @interview_days = InterviewDay.all.includes(:interviews, :applicants).order('interviews.start_time ASC')
   end
 
-
   def update
-
     Applicant.transaction do
       Interview.transaction do
         @interview = Interview.find(params[:id])
@@ -23,7 +21,7 @@ class InterviewsController < ApplicationController
             flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"
           end
         elsif params[:deregister]
-          if @interview.applicant == applicant and applicant.interview
+          if @interview.applicant == applicant and applicant.interview and not applicant.arrived?
             @interview.free!
             @interview.applicant = nil
             applicant.interview = nil
