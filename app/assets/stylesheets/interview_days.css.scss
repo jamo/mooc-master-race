@@ -3,15 +3,23 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .jumbotron{
-
   &.future{
     background-color: #0af !important;
+    &:hover {
+      background-color: rgba(0, 170, 255, 0.63) !important;
+    }
   }
   &.past{
     background-color: #A8A7A8 !important;
+    &:hover {
+        background-color: rgba(168, 167, 168, 0.62) !important;
+    }
   }
   &.free {
     background-color: #D9853B;
+    &:hover {
+      background-color: rgba(217, 133, 59, 0.63);
+    }
   }
   &.disabled {
     padding-top: 10px!important;
@@ -24,12 +32,17 @@
     h2 {
       font-size: 20px;
     }
+    &:hover {
+      background-color: rgba(243, 250, 182, 0.63);
+    }
   }
   &.reserved {
     background-color: #A8CD1B;
+    &:hover {
+      background-color: rgba(168, 205, 27, 0.63);
+    }
   }
 }
-
 ul {
   &.past {
    background-color: #D1D1D1;
@@ -41,6 +54,5 @@ ul {
 
   &.future{
   }
-
-
 }
+

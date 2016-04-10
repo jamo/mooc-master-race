@@ -1,9 +1,9 @@
+- applicant = interview.applicant
 - classs = if applicant && applicant.arrival_time
   - (Time.now > (applicant.arrival_time + 2.hours + 30.minutes)) ? "past" : "future"
 -else
   - "no"
-.jumbotron{class: [interview.status, classs, 'interview_details']}
-  - applicant = interview.applicant
+.jumbotron{class: [interview.status, classs, 'interview_details'], data: { username: applicant.nil? ? "" : applicant.nick, arrived: interview.start_time.nil? ? "" : interview.start_time.to_formatted_s(:iso8601)[0..-2] }, id:  applicant.nil? ? "" : applicant.nick}
   - if admin? || apprentice?
     -if interview.free?
       %h3
@@ -54,7 +54,10 @@
       = hidden_field_tag :interview_id, interview.id
       = hidden_field_tag :applicant_id, applicant.id
       = hidden_field_tag  :authenticity_token, form_authenticity_token
-      = datetime_local_field 'applicant', 'arrival_time'
+      - if applicant.arrival_time.nil?
+        = datetime_local_field 'applicant', 'arrival_time', value: interview.start_time.to_formatted_s(:iso8601)[0..-2]
+      - else
+        = datetime_local_field 'applicant', 'arrival_time'
 
-      = f.submit (applicant.arrived? ? "revert" : "mark as arrived"), class: "btn btn-primary btn-xs"
+      = f.submit (applicant.arrived? ? "revert" : "mark as arrived"), class: "btn btn-primary btn-xs waves-effect"
 

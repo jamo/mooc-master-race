@@ -46,11 +46,15 @@
         %td All
         - 1.upto(14).each do |i|
           %td= format_week_percents(@applicant.send("week#{i}".to_sym))
-      %tr
-        %td TMC
-        - 1.upto(14).each do |i|
-          %td= format_week_percents(@applicant.send("only_tmc_week#{i}".to_sym))
-
+      -if admin?
+        %tr
+          %td TMC
+          - 1.upto(14).each do |i|
+            %td= format_week_percents(@applicant.send("only_tmc_week#{i}".to_sym))
+  %p
+    Pisteet päivitetty:
+    = Settings.data_updated_at.strftime("%a %d.%m.%Y klo  %H:%M")
+    Virallinen ajantasalla oleva pistelista on kurssisivuilla.
   - if admin?
     #ul
       - 1.upto(14).each do |i|

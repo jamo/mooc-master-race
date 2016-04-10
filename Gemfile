@@ -50,4 +50,6 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'socket.io-rails'
+
 gem 'puma'

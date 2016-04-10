@@ -86,6 +86,7 @@ class Applicant < ActiveRecord::Base
 
       Settings.last_modified = @modified
       Settings.new_ready_for_interview = @ready_for_interview_status_has_changed
+      Settings.data_updated_at = Time.now
       {all_modified: @modified, ready_for_interview_status_has_changed: @ready_for_interview_status_has_changed}
     end
 

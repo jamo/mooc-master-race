@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419195055) do
+ActiveRecord::Schema.define(version: 20150502220329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150419195055) do
     t.string   "missing_points",                                  default: ""
     t.string   "key"
     t.integer  "interview_id"
-    t.string   "essay"
+    t.text     "essay"
     t.boolean  "message_sent",                                    default: false
     t.boolean  "ready_for_interview",                             default: false
     t.string   "original_missing_points"
@@ -45,6 +45,35 @@ ActiveRecord::Schema.define(version: 20150419195055) do
     t.datetime "arrival_time"
     t.decimal  "week13",                  precision: 5, scale: 0
     t.decimal  "week14",                  precision: 5, scale: 0
+    t.text     "explanations",                                    default: [],    array: true
+    t.decimal  "only_tmc_week1",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week2",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week3",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week4",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week5",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week6",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week7",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week8",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week9",          precision: 5, scale: 0
+    t.decimal  "only_tmc_week10",         precision: 5, scale: 0
+    t.decimal  "only_tmc_week11",         precision: 5, scale: 0
+    t.decimal  "only_tmc_week12",         precision: 5, scale: 0
+    t.decimal  "only_tmc_week13",         precision: 5, scale: 0
+    t.decimal  "only_tmc_week14",         precision: 5, scale: 0
+    t.text     "points_week1"
+    t.text     "points_week2"
+    t.text     "points_week3"
+    t.text     "points_week4"
+    t.text     "points_week5"
+    t.text     "points_week6"
+    t.text     "points_week7"
+    t.text     "points_week8"
+    t.text     "points_week9"
+    t.text     "points_week10"
+    t.text     "points_week11"
+    t.text     "points_week12"
+    t.text     "points_week13"
+    t.text     "points_week14"
   end
 
   add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id", using: :btree
@@ -82,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150419195055) do
     t.boolean  "admin",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "apprentice",      default: false
   end
 
 end

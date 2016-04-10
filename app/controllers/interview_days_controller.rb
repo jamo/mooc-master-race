@@ -18,6 +18,7 @@ class InterviewDaysController < ApplicationController
           if admin? || apprentice?
             if params[:mark_as_arrived]
               @applicant.arrived = true
+              @applicant.arrival_time = Time.now
               if params[:applicant][:arrival_time]
                 begin
                   time = params[:applicant][:arrival_time]
