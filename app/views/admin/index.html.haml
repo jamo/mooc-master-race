@@ -8,9 +8,12 @@
         = label_tag :email_template
         = text_area_tag :email_template, Settings.email_template, class: "input-block-level form-control", rows: 10
       %pre
-        Using ERB templating system; you can access applicants fields - applicant is in @applicant -variable
+        = preserve do
+          :escaped
+            Using ERB templating system; you can access applicants fields - applicant is in @applicant -variable
+            And don't do any nasty stuff with this!!1
 
-        Applicant(id: integer, name: string, nick: string, email: string, created_at: datetime, updated_at: datetime, week1: decimal, week2: decimal, week3: decimal, week4: decimal, week5: decimal, week6: decimal, week7: decimal, week8: decimal, week9: decimal, week10: integer, week11: integer, week12: integer, missing_points: string, key: string, interview_id: integer, essay: string, message_sent: boolean)
+            Applicant(id: integer, name: string, nick: string, email: string, created_at: datetime, updated_at: datetime, week1: decimal, week2: decimal, week3: decimal, week4: decimal, week5: decimal, week6: decimal, week7: decimal, week8: decimal, week9: decimal, week10: integer, week11: integer, week12: integer, missing_points: string, key: string, interview_id: integer, essay: text, message_sent: boolean, ready_for_interview: boolean, original_missing_points: string, arrived: boolean, arrival_time: datetime, week13: integer, week14: integer, only_tmc_week1: integer, only_tmc_week2: integer, only_tmc_week3: integer, only_tmc_week4: integer, only_tmc_week5: integer, only_tmc_week6: integer, only_tmc_week7: integer, only_tmc_week8: integer, only_tmc_week9: integer, only_tmc_week10: integer, only_tmc_week11: integer, only_tmc_week12: integer, only_tmc_week13: integer, only_tmc_week14: integer, points_week1: text, points_week2: text, points_week3: text, points_week4: text, points_week5: text, points_week6: text, points_week7: text, points_week8: text, points_week9: text, points_week10: text, points_week11: text, points_week12: text, points_week13: text, points_week14: text, phone_number: string)
 
       .form-group
         = label_tag :questionary_notes
@@ -26,7 +29,7 @@
       =hidden_field_tag :refresh_from_tmc
       .form-group
         .col-sm-10
-          = submit_tag "Refresh data from tmc", class: "btn btn-warning"
+          = submit_tag "Refresh data from tmc - I'll take a while", class: "btn btn-warning"
 .row-fluid
   .col-xs-10
     - if Settings.new_ready_for_interview

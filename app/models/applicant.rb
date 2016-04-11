@@ -53,7 +53,7 @@ class Applicant < ActiveRecord::Base
         applicant.nick = participant['username']
         applicant.email = participant['email']
 
-        update_week_percentage(applicant, participant['groups'], explanations['users'][participant['username']])
+        update_week_percentage(applicant, participant['groups'])
 
         check_compulsary_exercises(applicant, participant, week_data)
         #check_explanations(applicant, participant, explanations)
@@ -74,37 +74,28 @@ class Applicant < ActiveRecord::Base
 
     private
 
-    def update_week_percentage(applicant, groups, expls)
+    def update_week_percentage(applicant, groups)
       1.upto(14).each do |i|
         id = if i < 10
                "0#{i}"
              else
                "#{i}"
              end
-        weeks_explanations = EXPLS[i] || []
-        expls ||= []
 
-        done_by_participant = weeks_explanations.map do |e|
-          expls.select {|ex| ex == e}
-        end.flatten.compact
-
-
-        expl_max = weeks_explanations.length * 2
-        expl_done = done_by_participant.length * 2
 
         details = groups["viikko#{id}"]
         if details.nil?
           applicant.send("week#{i}=".to_sym, -1.0)
           applicant.send("only_tmc_week#{i}=".to_sym, -1.0)
-          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points none : TMC max none : expls: #{expls}")
+          applicant.send("points_week#{i}=".to_sym, ": TMC points none : TMC max none")
         else
           tmc_points = details['points'].to_f
           tmc_total = details['total'].to_f
-          result = ((tmc_points + expl_done) / (tmc_total + expl_max)) * 100;
+          result = ((tmc_points) / (tmc_total)) * 100;
           applicant.send("week#{i}=".to_sym, result)
           only_tmc = (tmc_points / tmc_total) * 100;
           applicant.send("only_tmc_week#{i}=".to_sym, only_tmc)
-          applicant.send("points_week#{i}=".to_sym, "TMC points #{tmc_points} : TMC max #{tmc_total}: expls: #{done_by_participant}")
+          applicant.send("points_week#{i}=".to_sym, "TMC points #{tmc_points} : TMC max #{tmc_total}")
         end
       end
     end
