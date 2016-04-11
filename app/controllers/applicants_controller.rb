@@ -17,7 +17,7 @@ class ApplicantsController < ApplicationController
                   :desc
                 end
 
-    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14 explanations)
+    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
     if fields.empty?
       fields << :name
