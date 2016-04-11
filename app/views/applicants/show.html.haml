@@ -22,6 +22,7 @@
   %p
     %strong= model_class.human_attribute_name(:message_sent) + ':'
     = @applicant.message_sent ? '✓' : '✘'
+    %h3 Emme onnistuneet automaattisesti yhdistämään TMC tunnustasi yhteishakulomakkeeseesi.
   %p
     -if @applicant.imported_user.nil?
       No mathced mooc applicant

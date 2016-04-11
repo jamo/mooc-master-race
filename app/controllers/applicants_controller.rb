@@ -36,16 +36,16 @@ class ApplicantsController < ApplicationController
 
     @applicants = if fields.any?
                     if params[:ready_for_exam] || (params[:filter_failed] && params[:failed_to])
-                      Applicant.where(condition).order(fields.map{|f| [f => direction]})
+                      Applicant.where(condition).includes(:imported_user).order(fields.map{|f| [f => direction]})
                     elsif (params[:filter_not_failed] && params[:failed_to])
-                      Applicant.where(condition).order(fields.map{|f| [f => direction]})
+                      Applicant.where(condition).includes(:imported_user, :interview).order(fields.map{|f| [f => direction]})
                     elsif params[:not_ready_for_exam]
-                      Applicant.where.not(condition).order(fields.map{|f| [f => direction]})
+                      Applicant.where.not(condition).includes(:imported_user, :interview).order(fields.map{|f| [f => direction]})
                     else
-                      Applicant.order(fields.map{|f| [f => direction]})
+                      Applicant.includes(:imported_user, :interview).order(fields.map{|f| [f => direction]})
                     end
                   else
-                    Applicant.all
+                    Applicant.all.includes(:imported_user, :interview)
                   end
   end
 
