@@ -24,7 +24,7 @@ class ImportedUsersController < ApplicationController
       params[:last_name] = 1
     end
 
-    @imported_users = ImportedUser.order(fields.map{|f| [f => direction]})
+    @imported_users = ImportedUser.order(fields.map{|f| [f => direction]}).includes(:applicant)
 
     if params[:only_mooc]
       @imported_users = @imported_users.where(mooc: true)
