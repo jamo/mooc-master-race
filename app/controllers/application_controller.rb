@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
   def applicant?
     return nil unless session[:applicant_token]
-    Applicant.where(key: session[:applicant_token]).first
+    Applicant.find_by(key: session[:applicant_token])
   end
 
   def respond_not_found(msg = 'Not Found')

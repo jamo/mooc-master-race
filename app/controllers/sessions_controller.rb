@@ -7,8 +7,6 @@ class SessionsController < ApplicationController
 
   def create
     user = User.where(username: params[:user][:username]).first
-    p USE: params
-    p PASSWD: params[:password]
     if user && user.authenticate(params[:user][:password])
       session[:user_id] = user.id
       return redirect_to interview_days_path, notice: "Welcome!" if user.apprentice?

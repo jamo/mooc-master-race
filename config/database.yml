@@ -7,13 +7,13 @@
 default: &default
   adapter: postgresql
   pool: 5
-  database: mooc-master-2015
+  database: mooc-master-2016
   username: jamo
   password: jamo
 
 development:
   <<: *default
-  database: mooc-master-2015
+  database: mooc-master-2016
   pool: 5
 
 # Warning: The database defined as "test" will be erased and

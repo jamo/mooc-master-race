@@ -53,6 +53,7 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.json
   def show
     return respond_access_denied if apprentice?
+    # logs in the applicant :D
     session[:applicant_token] = params[:id] unless current_user
     @title = Settings.email_title
     @email = ERB.new(Settings.email_template).result(get_binding)
@@ -72,13 +73,10 @@ class ApplicantsController < ApplicationController
     binding
   end
 
-  # GET /applicants/1/edit
   def edit
     return respond_access_denied if apprentice?
   end
 
-  # PATCH/PUT /applicants/1
-  # PATCH/PUT /applicants/1.json
   def update
     return respond_access_denied if @applicant.arrived?
     respond_to do |format|
@@ -93,7 +91,6 @@ class ApplicantsController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
   def set_applicant
     @applicant = Applicant.where(key: params[:id]).first
   end
@@ -101,7 +98,7 @@ class ApplicantsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def applicant_params
     if admin?
-      params.require(:applicant).permit(:name, :email, :essay, :message_sent)
+      params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number)
     else
       params.require(:applicant).permit(:essay)
     end

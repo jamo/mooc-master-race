@@ -40,6 +40,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'pg'
 group :production do
   gem 'rails_12factor'
+  gem 'puma'
 end
 
 # Use unicorn as the app server
@@ -52,4 +53,3 @@ end
 # gem 'debugger', group: [:development, :test]
 gem 'socket.io-rails'
 
-gem 'puma'

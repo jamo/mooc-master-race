@@ -6,21 +6,6 @@ class Applicant < ActiveRecord::Base
 
   before_create :set_key
 
-  EXPLS = {
-    2 =>  ['Lahjakortit', 'Muuttujat ja toistolausekkeet', 'Metodit ja parametrit'],
-    3 => ['Summa summarum', 'Muuttujat, parametrit, metodit, ...', 'Koodin siistintä ja viittaustyyppiset muuttujat'],
-    4 => ['Luokat ja oliot', 'Oliotermistöä'],
-    5 => ['Rakkautta rinnassa', 'Mistä nyt oikein on kyse: this?'],
-    6 => ['Alkeis- ja viittaustyyppiset muuttujat' , 'Linkitetyt metrojunat'],
-    7 => ['Staattiset ja ei-staattiset metodit'],
-    9 => ['Mikä ihmeen List?', 'Lentokoneista, luokista ja olioista'],
-    10 => ['Toiston toistoa', 'Single Responsibility Principle ja Refaktorointi'],
-    11 => ['Polymorfismi', 'Perinnästä'],
-    12 => ['Javan API ja PrintWriter', 'Rajapintojen hyötyjä'],
-    13 => ['Tarkkailija', 'Vanha ohjan koe I'],
-    14 => ['Koodin parantelua', 'Vanha ohjan koe II'],
-  }.freeze
-
   def set_key
     self.key = SecureRandom.uuid
   end
@@ -44,9 +29,6 @@ class Applicant < ActiveRecord::Base
   end
 
   class << self
-    def expls
-      EXPLS
-    end
 
     def update_all_data_with_tmc
       data = TmcConnection.new.download!
@@ -56,10 +38,10 @@ class Applicant < ActiveRecord::Base
       week_data = data[:week_data]
       explanations = data[:explanations]
 
-      participants.select! do |participant|
-        # TODO(jamo) make this key configurable
-        participant['hakee_yliopistoon_2015']
-      end
+      #participants.select! do |participant|
+      #  # TODO(jamo) make this key configurable
+      #  participant['hakee_yliopistoon_2016']
+      #end
 
       participants.each do |participant|
         applicant = Applicant.where(nick: participant['username']).first || Applicant.create(
@@ -74,7 +56,7 @@ class Applicant < ActiveRecord::Base
         update_week_percentage(applicant, participant['groups'], explanations['users'][participant['username']])
 
         check_compulsary_exercises(applicant, participant, week_data)
-        check_explanations(applicant, participant, explanations)
+        #check_explanations(applicant, participant, explanations)
 
         @modified << applicant if applicant.changed?
         applicant.save!
@@ -122,7 +104,7 @@ class Applicant < ActiveRecord::Base
           applicant.send("week#{i}=".to_sym, result)
           only_tmc = (tmc_points / tmc_total) * 100;
           applicant.send("only_tmc_week#{i}=".to_sym, only_tmc)
-          applicant.send("points_week#{i}=".to_sym, "Expl done: #{expl_done} : Expl max #{expl_max} : TMC points #{tmc_points} : TMC max #{tmc_total}: expls: #{done_by_participant}")
+          applicant.send("points_week#{i}=".to_sym, "TMC points #{tmc_points} : TMC max #{tmc_total}: expls: #{done_by_participant}")
         end
       end
     end
