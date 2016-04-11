@@ -1,0 +1,22 @@
+- model_class = ImportedUser
+
+%h3 Imported User, only for admins
+
+%p
+  %strong= model_class.human_attribute_name(:last_name) + ':'
+  = imported_user.last_name
+%p
+  %strong= model_class.human_attribute_name(:preferred_name) + ':'
+  = imported_user.preferred_name
+%p
+  %strong= model_class.human_attribute_name(:email) + ':'
+  = imported_user.email
+%p
+  %strong= model_class.human_attribute_name(:phone) + ':'
+  = imported_user.phone
+%p
+  %strong= model_class.human_attribute_name(:mooc) + ':'
+  = imported_user.mooc
+%p
+  %strong= model_class.human_attribute_name(:eligible) + ':'
+  = imported_user.eligible

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :interviews
   resources :interview_days
   resources :admin
+  resources :imported_users
 
   post 'applicants/:id/send_email', to: 'applicants#send_email', as: 'applicant_email'
 

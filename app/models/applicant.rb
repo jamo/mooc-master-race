@@ -3,6 +3,7 @@ class Applicant < ActiveRecord::Base
 
   has_one :interview
   has_one :interview_day, through: :interview
+  has_one :imported_user
 
   before_create :set_key
 
@@ -36,7 +37,6 @@ class Applicant < ActiveRecord::Base
       @ready_for_interview_status_has_changed = []
       participants = data[:data]
       week_data = data[:week_data]
-      explanations = data[:explanations]
 
       #participants.select! do |participant|
       #  # TODO(jamo) make this key configurable

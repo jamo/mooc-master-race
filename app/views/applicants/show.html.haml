@@ -15,13 +15,18 @@
 %p
   %strong= model_class.human_attribute_name(:sähköpostiosoite) + ':'
   = @applicant.email
+%p
+  %strong= model_class.human_attribute_name(:phone_number) + ':'
+  = @applicant.phone_number
 - if admin?
   %p
     %strong= model_class.human_attribute_name(:message_sent) + ':'
     = @applicant.message_sent ? '✓' : '✘'
   %p
-    %strong= model_class.human_attribute_name(:phone_number) + ':'
-    = @applicant.phone_number
+    -if @applicant.imported_user.nil?
+      No mathced mooc applicant
+    - else
+      = render 'imported_users/info', imported_user: @applicant.imported_user
 
 %p
   - unless @applicant.missing_points.blank?

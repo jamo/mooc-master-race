@@ -1,0 +1,51 @@
+- model_class = Applicant
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+.row-fluid
+  .col-xs-12
+    = form_tag imported_users_path, method: :get, :class => 'form-horizontal' do
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = label_tag :only_mooc, nil, class: 'checkbox' do
+            = check_box_tag :only_mooc, 1, params[:only_mooc]
+            Show only mooc applicants:
+      .form-group
+        = label_tag :direction, nil, class: "col-sm-2 control-label"
+        .col-sm-10
+          = select_tag :direction, options_for_select([ ['ASC', 'asc'] , ['DESC', 'desc'] ], params[:direction])
+      - %w(last_name preferred_name email phone mooc eligible key applicant_id created_at).each do |attr|
+        = check_box_tag attr.to_sym, 1, params[attr.to_sym], class: 'hidden', id: "#{attr}_checkbox"
+      = check_box_tag :filtering, 1, params[:filtering], class: 'hidden'
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = submit_tag "Filter", class: "btn btn-primary"
+  %table.table.table-striped.table-hover.table-bordered
+    %thead#imported_users-header
+      %tr
+        %th= @imported_users.count
+        %th#last_name= sortable_model_name(:last_name)
+        %th#preferred_name= sortable_model_name(:preferred_name)
+        %th#email= sortable_model_name(:email)
+        %th#phone= sortable_model_name(:phone)
+        %th#mooc= sortable_model_name(:mooc)
+        %th#eligible= sortable_model_name(:eligible)
+        %th#key= sortable_model_name(:key)
+        %th#applicant_id= sortable_model_name(:applicant_id)
+        %th#created_at= sortable_model_name(:created_at)
+        %th=t '.actions', :default => t("helpers.actions")
+    %tbody
+      - id = 0
+      - @imported_users.each do |user|
+        %tr
+          %td= id += 1
+          %th= user.last_name
+          %th= user.preferred_name
+          %th= user.email
+          %th= user.phone
+          %th= user.mooc
+          %th= user.eligible
+          %th= user.key
+          %td= link_to user.applicant.nick, applicant_path(user.applicant.key) if user.applicant
+          %th= user.created_at
+

@@ -100,7 +100,7 @@ class ApplicantsController < ApplicationController
     if admin?
       params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number)
     else
-      params.require(:applicant).permit(:essay)
+      params.require(:applicant).permit(:essay, :phone_number)
     end
   end
 end
