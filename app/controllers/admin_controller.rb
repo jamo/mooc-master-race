@@ -10,4 +10,13 @@ class AdminController < ApplicationController
     Settings.email_template = params[:email_template] if params[:email_template]
     Settings.questionary_notes = params[:questionary_notes] if params[:questionary_notes]
   end
+
+  # kinda misusing this...
+  def create
+    Settings.email_title = params[:email_title] if params[:email_title]
+    Settings.email_template = params[:email_template] if params[:email_template]
+    Settings.questionary_notes = params[:questionary_notes] if params[:questionary_notes]
+    redirect_to admin_index_path
+  end
+
 end

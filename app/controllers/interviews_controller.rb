@@ -17,6 +17,7 @@ class InterviewsController < ApplicationController
             @interview.applicant = applicant?
             applicant.interview = @interview
             @interview.reserved!
+            ConfirmationMailer.reserved(applicant, @interview).deliver
             flash[:notice] = "Aika varattu"
           else
             flash[:error] = "Ajanvaraus epäonnistui - päivitä sivu ja varaa aika uudestaan!"

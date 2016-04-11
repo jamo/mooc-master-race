@@ -53,5 +53,4 @@ class ApplicationController < ActionController::Base
       format.zip { render :text => msg, :status => code, :content_type => 'text/plain' }
     end
   end
-
 end

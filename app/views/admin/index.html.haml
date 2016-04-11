@@ -1,6 +1,6 @@
 .row-fluid
   .col-xs-10
-    = form_tag admin_index_path, method: :get, :class => 'form-horizontal' do
+    = form_tag admin_index_path, method: :post, :class => 'form-horizontal', multipart: true do
       .form-group
         = label_tag :email_title
         = text_field_tag :email_title, Settings.email_title, class: "input-block-level form-control"
