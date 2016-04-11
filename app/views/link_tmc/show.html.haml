@@ -1,0 +1,37 @@
+.page-header
+  %h1 TMC tunnuksen yhdistäminen yhteishakulomakkeeseen
+  %p
+    Voit tällä sivulla linkata TMC tunnuksesi yhteishakuusi.
+  %p
+    Tämä tulee tehdä vain kerran. Itse haastatteluihin ilmoittautumiseen saat irrallisen linkin!
+
+- if @imported.applicant
+  .jumbotron
+    %h3 TMC tunnus on nyt/jo linkattu.
+    %p
+      Nyt vain odotellaan kunnes saat kutsun varaamaan itsellesi uuden ajan!
+    %p
+      Et tarvitse tätä linkkiä enää.
+- else
+  %p
+    Hei
+    = @imported.preferred_name
+    = @imported.last_name
+
+    Linkkaa TMC tunnuksesi yheishakuusi kirjautumalla TMC tunnuksillasi:
+
+  %p
+    = form_tag link_tmc_index_path,  class: "form-horizontal", autocomplete: "off" do
+      .form-group
+        = label_tag :login, 'TMC-tunnuksesi', class: "col-sm-2 control-label"
+        .col-sm-10
+          = text_field_tag :login, nil, class: "input-block-level form-control"
+      .form-group
+        = label_tag :password, 'Salasana', class: "col-sm-2 control-label"
+        .col-sm-10
+          = password_field_tag :password, nil, class: "input-block-level form-control"
+      = hidden_field_tag :key, params[:id]
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = submit_tag "Yhdistä TMC-tunnus", class: 'btn btn-primary'
+          - #= f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'

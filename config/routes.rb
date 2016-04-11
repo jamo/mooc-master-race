@@ -10,9 +10,7 @@ Rails.application.routes.draw do
   resources :interview_days
   resources :admin
   resources :imported_users
-
-  post 'applicants/:id/send_email', to: 'applicants#send_email', as: 'applicant_email'
-
+  resources :link_tmc
 
   root to: 'applicants#index'
 

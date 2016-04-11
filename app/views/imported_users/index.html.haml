@@ -31,6 +31,7 @@
         %th#mooc= sortable_model_name(:mooc)
         %th#eligible= sortable_model_name(:eligible)
         %th#key= sortable_model_name(:key)
+        %th#link_tmc Link TMC
         %th#applicant_id= sortable_model_name(:applicant_id)
         %th#created_at= sortable_model_name(:created_at)
         %th=t '.actions', :default => t("helpers.actions")
@@ -46,6 +47,7 @@
           %th= user.mooc
           %th= user.eligible
           %th= user.key
+          %td= link_to "Link TMC", link_tmc_path(user.key)
           %td= link_to user.applicant.nick, applicant_path(user.applicant.key) if user.applicant
           %th= user.created_at
 

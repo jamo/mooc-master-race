@@ -1,0 +1,2 @@
+module ImportedUsers::LinkTmcHelper
+end
