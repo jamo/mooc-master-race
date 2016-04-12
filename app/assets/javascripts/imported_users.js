@@ -1,6 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-function applicantsReady() {
+function importedUsersReady() {
   $('#imported_users-header th').each(function(){
     var name = $(this).attr('id');
     if (undefined != name){
@@ -27,5 +27,5 @@ function applicantsReady() {
 
 }
 
-$(document).ready(applicantsReady);
-$(document).on('page:load', applicantsReady);
+$(document).ready(importedUsersReady);
+$(document).on('page:load', importedUsersReady);
