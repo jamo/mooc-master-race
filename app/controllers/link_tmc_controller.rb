@@ -1,14 +1,21 @@
 class LinkTmcController < ApplicationController
 
+  skip_before_action :auth!, only: [:show]
+
   def show
+    session[:imported_token] = params[:id] unless current_user
     @imported = ImportedUser.find_by(key: params[:id])
   end
 
   def create
     import = ImportedUser.find_by(key: params[:key])
     applicant = Applicant.find_by(nick: params[:login])
-    if import.nil? || applicant.nil?
-      flash[:error] = "Invalid tmc account. You shound't get this. Try again and if you keep on getting this, contact us!"
+    if import.nil?
+      flash[:error] = "Invalid TMC account. Did you take the 2016-ohjelmointi course?"
+      return redirect_to :back
+    end
+    if applicant.nil?
+      flash[:error] = "No application found. Did you copypaste the link properly?"
       return redirect_to :back
     end
 

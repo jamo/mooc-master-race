@@ -78,6 +78,7 @@
             %th#email= sortable_model_name(:email)
             %th#created_at= sortable_model_name(:created_at)
             %th#imported_user Mooc application matched (view participant page for info)
+            %th#imported_user Mooc application done
             - if @show_missing_points
               %th#missing_points= sortable_model_name(:missing_points)
             - if @show_explanations
@@ -101,6 +102,7 @@
               %td= applicant.email
               %td= applicant.created_at
               %td= !applicant.imported_user.nil? ? '✓' : '✘'
+              %td= applicant.try(:imported_user, :mooc).nil? ? '✘' : '✓'
               - if @show_missing_points
                 %td= applicant.original_missing_points
               - if @show_explanations

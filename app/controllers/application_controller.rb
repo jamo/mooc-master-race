@@ -16,7 +16,9 @@ class ApplicationController < ActionController::Base
     if session[:user_id]
       User.find(session[:user_id])
     elsif session[:applicant_token]
-      Applicant.where(key: session[:applicant_token]).first
+      Applicant.find_by(key: session[:applicant_token])
+    elsif session[:imported_token]
+      ImportedUser.find_by(key: session[:imported_token])
     end
   end
 

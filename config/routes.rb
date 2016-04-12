@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :imported_users
   resources :link_tmc
 
+  post 'applicants/:id/send_email', to: 'applicants#send_email', as: 'applicant_email'
+
   root to: 'applicants#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
