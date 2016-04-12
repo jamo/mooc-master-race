@@ -46,6 +46,8 @@
               %li= link_to "Day view", interview_days_path
             - if applicant?
               %li= link_to "Omat tietoni - #{applicant?.name}", applicant_path(applicant?.key)
+            - if imported?
+              %li= link_to "#{imported?.preferred_name} #{imported?.last_name}", link_tmc_path(imported?.key)
             - if current_user
               %li= link_to "Logout", logout_path
           -#%ul.nav.navbar-nav.navbar-right.pull-right

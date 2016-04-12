@@ -1,9 +1,16 @@
 .page-header
-  %h1 TMC tunnuksen yhdistäminen yhteishakulomakkeeseen
+  %h1 TMC tunnuksen yhdistäminen yhteishakutietoihisi.
   %p
-    Voit tällä sivulla linkata TMC tunnuksesi yhteishakuusi.
+    Voit tällä sivulla yhdistää TMC tunnuksesi yhteishakutietoihisi.
+    Tämä tulee tehdä, jotta voimme lähettää kutsun näyttökoehaastatteluun
+    Haastatteulukutsuja lähetetään sitä mukaa kun viikon 12. pisteraja täyttyy.
+
   %p
-    Tämä tulee tehdä vain kerran. Itse haastatteluihin ilmoittautumiseen saat irrallisen linkin!
+    Huomaathan kuitenkin että sinun tulee edelleen tehdä hakuohjeissa määritellyt tehtävät (90% viikottaisista pisteistä) kurssisivujen ohjeiden mukaisesti.
+  %p
+    Hakuprosessi alkaa aikataulullisista syistä jo ennen kuin kurssin kaikki tehtävät on tarvinnut olla tehtynä.
+  %p
+    Tämä tulee tehdä vain kerran. Itse haastatteluihin ilmoittautumiseen saat erillisen linkin!
 
 - if @imported.applicant
   .jumbotron
@@ -14,9 +21,6 @@
       Et tarvitse tätä linkkiä enää.
 - else
   %p
-    Hei
-    = @imported.preferred_name
-    = @imported.last_name
 
     Linkkaa TMC tunnuksesi yheishakuusi kirjautumalla TMC tunnuksillasi:
 
@@ -35,3 +39,15 @@
         .col-sm-offset-2.col-sm-10
           = submit_tag "Yhdistä TMC-tunnus", class: 'btn btn-primary'
           - #= f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'
+  - if admin?
+    %h4 Adminina voit linkata TMC tunnuksen suoraan.
+    %p Sallitut tmc tunnukset on listattu applicants sivuilla.
+    = form_tag link_tmc_index_path,  class: "form-horizontal", autocomplete: "off" do
+      .form-group
+        = label_tag :login, 'TMC-tunnus', class: "col-sm-2 control-label"
+        .col-sm-10
+          = text_field_tag :login, nil, class: "input-block-level form-control"
+      = hidden_field_tag :key, params[:id]
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = submit_tag "Yhdistä TMC-tunnus suoraan (vain adminit)", class: 'btn btn-primary'

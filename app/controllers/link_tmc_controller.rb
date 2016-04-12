@@ -11,11 +11,11 @@ class LinkTmcController < ApplicationController
     import = ImportedUser.find_by(key: params[:key])
     applicant = Applicant.find_by(nick: params[:login])
     if import.nil?
-      flash[:error] = "Invalid TMC account. Did you take the 2016-ohjelmointi course?"
+      flash[:error] = "No application found. Did you copypaste the link properly?"
       return redirect_to :back
     end
     if applicant.nil?
-      flash[:error] = "No application found. Did you copypaste the link properly?"
+      flash[:error] = "Invalid TMC account. Did you take the 2016-ohjelmointi course?"
       return redirect_to :back
     end
 
@@ -25,15 +25,20 @@ class LinkTmcController < ApplicationController
 
     login = params[:login]
     password = params[:password]
-    auth = {username: login, password: password }
-    url = "https://tmc.mooc.fi/mooc/courses.json?api_version=7"
-    resp = HTTParty.get(url, basic_auth: auth, timeout: 300)
-    if resp.code == 200
+    ok = if admin?
+          !applicant.nil?
+         else
+           auth = {username: login, password: password }
+           url = "https://tmc.mooc.fi/mooc/courses.json?api_version=7"
+           resp = HTTParty.get(url, basic_auth: auth, timeout: 300)
+           resp.code == 200
+         end
+    if ok
       applicant.transaction do
         import.transaction do
-          imported.applicant = applicant
-          applicant.phone_number = imported.phone
-          imported.save!
+          import.applicant = applicant
+          applicant.phone_number = import.phone
+          import.save!
           applicant.save!
         end
       end

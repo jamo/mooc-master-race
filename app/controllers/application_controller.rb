@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :admin?, :applicant?, :apprentice?
+  helper_method :current_user, :admin?, :applicant?, :apprentice?, :imported?
 
   before_filter :auth!
 
@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
   def applicant?
     return nil unless session[:applicant_token]
     Applicant.find_by(key: session[:applicant_token])
+  end
+
+  def imported?
+    return nil unless session[:imported_token]
+    ImportedUser.find_by(key: session[:imported_token])
   end
 
   def respond_not_found(msg = 'Not Found')
