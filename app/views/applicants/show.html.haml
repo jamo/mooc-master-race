@@ -101,12 +101,12 @@
           = f.submit "Update message sent status", class: "btn btn-warning"
 
     .jumbotron
-      %h3 Title:
+      %h2 Sähköpostin esikatselu.
+      %h4 Otsikko ja alla viesti:
       %p= raw @title
-      %h3 Email template:
       %p= raw @email
 
     = form_for @applicant, method: :post, url: applicant_email_path(@applicant.key), html: {class: "form-horizontal"} do |f|
       .form-group
         .col-sm-offset-2.col-sm-10
-          = f.submit "Send email", class: "btn btn-warning"
+          = f.submit "Send email", class: "btn btn-warning",data: { confirm: "Oletko varma, että haluat lähettää näyttökoe kutsun?"}

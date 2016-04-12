@@ -17,6 +17,17 @@
 %p
   %strong= model_class.human_attribute_name(:mooc) + ':'
   = imported_user.mooc
-%p
-  %strong= model_class.human_attribute_name(:eligible) + ':'
-  = imported_user.eligible
+
+-if imported_user.eligible
+  %p
+    %strong= model_class.human_attribute_name(:eligible) + ':'
+    = imported_user.eligible
+- else
+  .well.well-danger
+    %p
+      %strong= model_class.human_attribute_name(:eligible) + ':'
+      = imported_user.eligible
+    %p
+      Eli hakijalistassa opiskelija oli keltaisella rivillä.
+    %p
+      Hänelle ei siis pitäisi lähettää haastattelukutsuja...

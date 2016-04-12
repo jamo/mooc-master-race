@@ -5,10 +5,11 @@ class ImportedUsersController < ApplicationController
     return respond_access_denied if apprentice?
 
     # Default options
-    unless params[:filtering]
+    unless !!params[:filtering]
       params[:only_mooc] = 1
       params[:applicant_id] = 1
       params[:last_name] = 1
+      params[:filtering] = 1
     end
 
     direction = if params[:direction] == "desc"
