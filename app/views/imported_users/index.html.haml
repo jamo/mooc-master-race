@@ -34,7 +34,6 @@
         %th#link_tmc Link TMC
         %th#applicant_id= sortable_model_name(:applicant_id)
         %th#created_at= sortable_model_name(:created_at)
-        %th=t '.actions', :default => t("helpers.actions")
     %tbody
       - id = 0
       - @imported_users.each do |user|
