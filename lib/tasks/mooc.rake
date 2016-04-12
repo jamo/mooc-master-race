@@ -6,7 +6,7 @@ namespace :mooc do
 
     fields = %i(last_name preferred_name email phone mooc eligible).freeze
     IO.readlines(source_file).each do |line|
-      data = fields.zip(line.split(",")).to_h
+      data = fields.zip(line.chomp.split(",")).to_h
       data[:mooc] = !data[:mooc].blank?
       data[:eligible] = data[:eligible] != "ei"
       user = ImportedUser.create!(data)
