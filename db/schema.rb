@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411100553) do
+ActiveRecord::Schema.define(version: 20160412191611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "applicants", force: true do |t|
     t.string   "name"
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 20160411100553) do
     t.text     "points_week13"
     t.text     "points_week14"
     t.string   "phone_number"
+    t.text     "secret_notes"
   end
 
   add_index "applicants", ["interview_id"], name: "index_applicants_on_interview_id", using: :btree
@@ -126,6 +128,7 @@ ActiveRecord::Schema.define(version: 20160411100553) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "apprentice",      default: false
+    t.uuid     "key",             default: "uuid_generate_v1()"
   end
 
 end

@@ -88,6 +88,16 @@
         = f.submit (@applicant.essay.blank? ?  "Tallenna kirjoitelma" : "Päivitä kirjoitelma"), class: 'btn btn-primary'
 
 - if admin?
+  %h4 Salaiset muistiinpanot (vain admineille)
+  = form_for @applicant, html: {class: "form-horizontal" } do |f|
+    .form-group
+      = f.label "Salaiset huomiot:", class: "col-sm-2 control-label"
+      .col-sm-10
+        = f.text_area :secret_notes, class: "input-block-level form-control", rows: 10
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = f.submit (@applicant.secret_notes.blank? ?  "Tallenna salaiset muistiinpanot" : "Päivitä salaisia muistiinpanoja"), class: 'btn btn-primary'
+
   %p
     = form_for @applicant, html: {class: "form-horizontal"} do |f|
       .form-group

@@ -17,7 +17,7 @@ class ApplicantsController < ApplicationController
                   :desc
                 end
 
-    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14)
+    interesting_orders = %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 wek5 week6 week7 week8 week9 week10 week11 week12 week13 week14 secret_notes)
     fields = interesting_orders.map {|o| params[o.to_sym]? o.to_sym : nil}.compact
     if fields.empty?
       fields << :name
@@ -78,10 +78,18 @@ class ApplicantsController < ApplicationController
   end
 
   def update
-    return respond_access_denied if @applicant.arrived?
+    return respond_access_denied if @applicant.arrived? && !admin?
     respond_to do |format|
-      if @applicant.update(applicant_params)
-        format.html { redirect_to @applicant, notice: 'Kirjoitelma päivitetty.' }
+      @applicant.assign_attributes(applicant_params)
+      msg = if @applicant.essay_changed?
+              "Kirjoitelma päivitetty."
+            elsif @applicant.secret_notes_changed?
+              "Salaiset muistiinpanot päivitetty"
+            else
+              "Päivitetty onnistuneesti"
+            end
+      if @applicant.save
+        format.html { redirect_to @applicant, notice: msg }
         format.json { render :show, status: :ok, location: @applicant }
       else
         format.html { render :edit }
@@ -98,7 +106,7 @@ class ApplicantsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def applicant_params
     if admin?
-      params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number)
+      params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number, :secret_notes)
     else
       params.require(:applicant).permit(:essay, :phone_number)
     end

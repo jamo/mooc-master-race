@@ -58,7 +58,7 @@
         -# = label_tag :name, nil, class: 'col-sm-2 control-label'
           .col-sm-10
             = check_box_tag :name, 1, false, class: 'form-control'
-      - %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 week5 week6 week6 week8 week9 week10 week11 week12 week13 week14).each do |attr|
+      - %w(message_sent essay ready_for_interview interview_id name nick email missing_points week1 week2 week3 week4 week5 week6 week6 week8 week9 week10 week11 week12 week13 week14 secret_notes).each do |attr|
         = check_box_tag attr.to_sym, 1, params[attr.to_sym], class: 'hidden', id: "#{attr}_checkbox"
 
       %table.table.table-striped.table-hover.table-bordered
@@ -88,6 +88,8 @@
                 %th{id: "week#{i}"}= sortable_model_name("week#{i}".to_sym)
 
             %th=t '.actions', :default => t("helpers.actions")
+            - if admin?
+              %th#secret_notes= sortable_model_name(:secret_notes)
         %tbody
           - id = 0
           - @applicants.each do |applicant|
@@ -112,3 +114,5 @@
                   %td= format_week_percents(applicant.send("week#{i}".to_sym))
               %td
                 = link_to t('.edit', :default => t("helpers.links.edit")), edit_applicant_path(applicant), :class => 'btn btn-mini'
+              - if admin?
+                %td= applicant.secret_notes
