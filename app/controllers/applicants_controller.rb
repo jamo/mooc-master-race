@@ -57,6 +57,7 @@ class ApplicantsController < ApplicationController
     session[:applicant_token] = params[:id] unless current_user
     @title = Settings.email_title
     @email = ERB.new(Settings.email_template).result(get_binding)
+
   end
 
   def send_email
