@@ -1,4 +1,16 @@
 - model_class = Applicant
+- if !@applicant.imported_user.nil? && !@applicant.imported_user.eligible
+  -content_for(:extra_class) do
+    warn
+
+.page-header
+  - if !@applicant.imported_user.nil? && !@applicant.imported_user.eligible
+    - if admin?
+      %h1
+        Eli hakijalistassa opiskelija oli keltaisella rivillä.  Hänelle ei siis pitäisi lähettää haastattelukutsuja...
+    %h1
+      Et ole tiedekunnan mukaan hakukelponen ohjelmoinnin MOOC-kurssin kautta. Sinun ei olisi ikinä pitänyt päätyä tälle sivulle. On siis tapahtunut virhe. Pahoittelemme sitä.
+      Mikäli kuitenkin asia ei ole mielestäsi näin otathan meihin yhteyttä!
 .page-header
   %h1 Omat tietoni
   %p

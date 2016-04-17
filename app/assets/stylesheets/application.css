@@ -127,3 +127,9 @@
   border-color: #ebccd1;
 }
 
+.warn {
+  color: #a94442 !important;
+  background-color: #f2dede !important;
+  border-color: #ebccd1 !important;
+}
+

@@ -26,7 +26,7 @@
       ga('send', 'pageview');
 
 
-  %body
+  %body{ class: (yield :extra_class)}
     .navbar.navbar-default.navbar-static-top
       .container
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
