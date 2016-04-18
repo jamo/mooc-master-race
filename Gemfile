@@ -38,10 +38,10 @@ gem 'spring',        group: :development
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'pg'
-group :production do
-  gem 'rails_12factor'
-  gem 'puma'
-end
+#group :production do
+#  gem 'rails_12factor'
+#  gem 'puma'
+#end
 
 # Use unicorn as the app server
 # gem 'unicorn'
