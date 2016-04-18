@@ -95,7 +95,7 @@
               %td= link_to applicant.nick, applicant_path(applicant.key)
               %td= applicant.email
               %td= applicant.created_at
-              %td= applicant.try(:imported_user, :mooc).nil? ? '✘' : '✓'
+              %td= can_apply_via_mooc(applicant) ?  '✓' : '✘'
               - if @show_missing_points
                 %td= applicant.original_missing_points
               - if @show_explanations

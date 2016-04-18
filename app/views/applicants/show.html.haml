@@ -1,5 +1,5 @@
 - model_class = Applicant
-- if !@applicant.imported_user.nil? && !@applicant.imported_user.eligible
+- if !can_apply_via_mooc(@applicant)
   -content_for(:extra_class) do
     warn
 
