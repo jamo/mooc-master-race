@@ -9,11 +9,11 @@
         .col-sm-offset-2.col-sm-10
           = label_tag :filter_failed, nil, class: 'checkbox' do
             = check_box_tag :filter_failed, 1, params[:filter_failed]
-            Show only failed to week:
+            Show only failed week:
         .col-sm-offset-2.col-sm-10
           = label_tag :filter_not_failed, nil, class: 'checkbox' do
             = check_box_tag :filter_not_failed, 1, params[:filter_not_failed]
-            Show only not failed to week:
+            Show only not failed week:
       .form-group
         = label_tag :failed_to, nil, class: "col-sm-2 control-label"
         .col-sm-10
@@ -34,19 +34,14 @@
             Show missing_points
       .form-group
         .col-sm-offset-2.col-sm-10
-          = label_tag :show_explanations, nil, class: 'checkbox' do
-            = check_box_tag :show_explanations, 1, params[:show_explanations]
-            Show explanations
-      .form-group
-        .col-sm-offset-2.col-sm-10
           = label_tag :ready_for_exam, nil, class: 'checkbox' do
             = check_box_tag :ready_for_exam, 1, params[:ready_for_exam]
-            Show only ready for exam (no missing points and atleast 90% done for each week)
+            Show only ready for exam (no missing points and atleast 90% done for each week 1-12)
       .form-group
         .col-sm-offset-2.col-sm-10
           = label_tag :not_ready_for_exam, nil,  class: 'checkbox' do
             = check_box_tag :not_ready_for_exam, 1, params[:not_ready_for_exam]
-            Show only those who are not ready for exam (missing points or under 90% done for some week)
+            Show only those who are not ready for exam (missing points or under 90% done for some week (weeks 1-12))
       -#.form-group
         .col-sm-offset-2.col-sm-10
           = label_tag :name,nil,  class: 'checkbox' do
@@ -77,12 +72,9 @@
             %th#nick= sortable_model_name(:nick)
             %th#email= sortable_model_name(:email)
             %th#created_at= sortable_model_name(:created_at)
-            %th#imported_user Mooc application matched (view participant page for info)
-            %th#imported_user Mooc application done
+            %th#imported_user Yhteishakulomake yhdistetty tunnukseen
             - if @show_missing_points
               %th#missing_points= sortable_model_name(:missing_points)
-            - if @show_explanations
-              %th#explanations= sortable_model_name(:explanations)
             - if @show_weekly_points
               - 1.upto(14).each do |i|
                 %th{id: "week#{i}"}= sortable_model_name("week#{i}".to_sym)
@@ -103,7 +95,6 @@
               %td= link_to applicant.nick, applicant_path(applicant.key)
               %td= applicant.email
               %td= applicant.created_at
-              %td= !applicant.imported_user.nil? ? '✓' : '✘'
               %td= applicant.try(:imported_user, :mooc).nil? ? '✘' : '✓'
               - if @show_missing_points
                 %td= applicant.original_missing_points
