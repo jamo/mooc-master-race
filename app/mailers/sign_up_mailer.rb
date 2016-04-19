@@ -11,4 +11,12 @@ class SignUpMailer < ActionMailer::Base
     @message = message
     mail to: to, subject: title, bcc: "jamo+mooc-master-sent@jamo.io,mooc@cs.helsinki.fi"
   end
+
+
+  def tmc_not_linked(imported_user)
+    @imported_user = imported_user
+
+    title = "Tärkeää kevään 2016 MOOC yhteishausta"
+    mail to: imported_user.email, subject: title, bcc: "jamo+mooc-master-sent@jamo.io,avihavai@cs.helsinki.fi"
+  end
 end
