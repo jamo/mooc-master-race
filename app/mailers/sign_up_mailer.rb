@@ -9,6 +9,6 @@ class SignUpMailer < ActionMailer::Base
   def sign_up(to, title, message)
 
     @message = message
-    mail to: to, subject: title, bcc: "jamo+mooc-master-sent@jamo.io,mooc@cs.helsinki.fi"
+    mail to: to, subject: title, bcc: "jamo+mooc-master-sent@jamo.io,avihavai@cs.helsinki.fi"
   end
 end
