@@ -1,5 +1,5 @@
 - model_class = Applicant
-- if !@applicant.imported_user.nil? && !@applicant.imported_user.eligible
+- if !can_apply_via_mooc(@applicant)
   -content_for(:extra_class) do
     warn
 
@@ -120,7 +120,7 @@
               Message sent
       .form-group
         .col-sm-offset-2.col-sm-10
-          = f.submit "Update message sent status", class: "btn btn-warning"
+          = f.submit "Update message sent status (e.g when email is sent manually)", class: "btn btn-warning"
 
     .jumbotron
       %h2 Sähköpostin esikatselu.

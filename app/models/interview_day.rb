@@ -52,7 +52,7 @@ class InterviewDay < ActiveRecord::Base
         next if interview_day.nil?
         acc_time = interview_day.date
         interview_day.interviews << Interview.create!(start_time: acc_time, duration_in_minutes: 15)
-        end_time = interview_day.date.dup.change({hour: 14,min: 00})
+        end_time = interview_day.date.dup.change({hour: 15,min: 00})
         loop do
           acc_time += 15.minutes
           #p ACC: acc_time
