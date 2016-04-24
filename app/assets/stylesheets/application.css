@@ -18,6 +18,11 @@ textarea {
   font-family: "Courier New", Courier, monospace;
 }
 
+pre {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
 .interview_details {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
