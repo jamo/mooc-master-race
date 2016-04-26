@@ -26,7 +26,7 @@ module ApplicantsHelper
   end
 
   def can_apply_via_mooc(applicant)
-    if !applicant.imported_user.nil? && applicant.imported_user.mooc && applicant.imported_user.eligible
+    if (!applicant.imported_user.nil? && applicant.imported_user.mooc && applicant.imported_user.eligible) || applicant.applies_next_year
       true
     else
       false

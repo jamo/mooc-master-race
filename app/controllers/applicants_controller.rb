@@ -86,6 +86,8 @@ class ApplicantsController < ApplicationController
               "Kirjoitelma päivitetty."
             elsif @applicant.secret_notes_changed?
               "Salaiset muistiinpanot päivitetty"
+            elsif @applicant.applies_next_year_changed?
+              "Yhteishakutieto päivitetty"
             else
               "Päivitetty onnistuneesti"
             end
@@ -107,7 +109,7 @@ class ApplicantsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def applicant_params
     if admin?
-      params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number, :secret_notes)
+      params.require(:applicant).permit(:name, :email, :essay, :message_sent, :phone_number, :secret_notes, :applies_next_year)
     else
       params.require(:applicant).permit(:essay, :phone_number)
     end

@@ -35,7 +35,9 @@
     %strong= model_class.human_attribute_name(:message_sent) + ':'
     = @applicant.message_sent ? '✓' : '✘'
   %p
-    -if @applicant.imported_user.nil?
+    -if @applicant.applies_next_year?
+      Ei yhteishakutietoja, hakee ensivuoden yhteishaussa*
+    -elsif @applicant.imported_user.nil?
       .well.well-danger
         %h3 Emme onnistuneet automaattisesti yhdistämään TMC tunnustasi yhteishakuun!
         %p Sinun olisi tullut saada sähköposti aiheeseen liittyen. Jos viestiä ei löydy, lähetä meille mahdollisimman pikaisesti sähköpostia osoitteeseen mooc@cs.helsinki.fi niin korjataan tilanne.
@@ -109,6 +111,17 @@
     .form-group
       .col-sm-offset-2.col-sm-10
         = f.submit (@applicant.secret_notes.blank? ?  "Tallenna salaiset muistiinpanot" : "Päivitä salaisia muistiinpanoja"), class: 'btn btn-primary'
+  %p
+    = form_for @applicant, html: {class: "form-horizontal"} do |f|
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          .checkbox
+            = label_tag do
+              = f.check_box :applies_next_year
+              Yhteishakee ensivuonna
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = f.submit "Päivitä hakee ensivuonna kenttä", class: "btn btn-warning"
 
   %p
     = form_for @applicant, html: {class: "form-horizontal"} do |f|
