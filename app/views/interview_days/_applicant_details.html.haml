@@ -1,6 +1,6 @@
 - applicant = interview.applicant
 - classs = if applicant && applicant.arrival_time
-  - (Time.now > (applicant.arrival_time + 2.hours + 30.minutes)) ? "past" : "future"
+  - (Time.now > (applicant.arrival_time + 2.hours)) ? "past" : "future"
 -else
   - "no"
 .jumbotron{class: [interview.status, classs, 'interview_details'], data: { username: applicant.nil? ? "" : applicant.nick, arrived: interview.start_time.nil? ? "" : interview.start_time.to_formatted_s(:iso8601)[0..-2] }, id:  applicant.nil? ? "" : applicant.nick}
@@ -27,7 +27,7 @@
         = interview
         \-
         Interview at:
-        =(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
+        =(interview.start_time + 2.hours).strftime("%H:%M")
       - unless applicant.nil?
         %h4
           Arrived:
@@ -38,7 +38,7 @@
             =  applicant.arrival_time.strftime("%H:%M")
             <br>
             Koe päättyy:
-            = (applicant.arrival_time + 2.hours + 30.minutes).strftime("%H:%M")
+            = (applicant.arrival_time + 2.hours).strftime("%H:%M")
             <br>
           -#=(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
   %ul
