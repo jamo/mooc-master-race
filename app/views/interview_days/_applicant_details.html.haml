@@ -58,6 +58,6 @@
         = datetime_local_field 'applicant', 'arrival_time', value: interview.start_time.to_formatted_s(:iso8601)[0..-2]
       - else
         = datetime_local_field 'applicant', 'arrival_time'
-
+      = f.text_field :desk, placeholder: "Desk number"
       = f.submit (applicant.arrived? ? "revert" : "mark as arrived"), class: "btn btn-primary btn-xs waves-effect"
 

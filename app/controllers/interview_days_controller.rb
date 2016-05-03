@@ -30,6 +30,7 @@ class InterviewDaysController < ApplicationController
               @applicant.arrived = false
               @applicant.arrival_time = nil
             end
+            @applicant.desk = params[:applicant][:desk]
             @applicant.save! if @applicant
             @interview.save! if @interview
           end
