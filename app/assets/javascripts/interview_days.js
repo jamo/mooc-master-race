@@ -1,5 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
+function toggleSubmissionResults() {
+  [].forEach.call(document.getElementsByClassName("submissions"), function(e){
+    e.classList.toggle("hidden");
+  })
+}
 function appendData(nick, submission) {
   if (nick === 'Jarmo') {nick = 'Jamo';}
   if (document.querySelector("[id='" + nick + "']")) {
@@ -20,7 +25,8 @@ function appendData(nick, submission) {
     e.appendChild(inner);
     e.appendChild(a);
     e.classList.add('tmc-results');
-    elem.insertAdjacentElement('afterEnd', e);
+    elem.parentElement.getElementsByClassName("submissions")[0].appendChild(e)
+    //elem.insertAdjacentElement('afterEnd', e);
   }
 }
 function fetchTmcSubmissions () {

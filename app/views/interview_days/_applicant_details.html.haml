@@ -41,6 +41,7 @@
             = (applicant.arrival_time + 2.hours).strftime("%H:%M")
             <br>
           -#=(interview.start_time + 2.hours + 30.minutes).strftime("%H:%M")
+  .submissions
   %ul
   -if applicant && admin?
     %pre= applicant.essay
